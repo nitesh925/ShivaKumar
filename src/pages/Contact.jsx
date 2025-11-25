@@ -18,15 +18,11 @@ const ContactUs = () => {
   <h1>Contact Us</h1>
   <p>Home — Contact Us</p>
 </div>
-
-
       {/* GET IN TOUCH TEXT */}
       <div className="get-touch">
         <h2>Get In Touch</h2>
         <p>
-          
           We would be happy to assist you.
-          
           Let us know your queries or what you are looking for.
         </p>
       </div>

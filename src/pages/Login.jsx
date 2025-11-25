@@ -3,7 +3,7 @@ import "../styles/Login.css";
 import { FaEnvelope, FaLock, FaFacebookF, FaGoogle } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
 import { auth } from "../firebase/firebaseConfig";
-import { signInWithEmailAndPassword } from "firebase/auth";
+import { signInWithEmailAndPassword, sendPasswordResetEmail } from "firebase/auth";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -11,10 +11,12 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
+  const [infoMsg, setInfoMsg] = useState("");
 
   const handleLogin = async (e) => {
     e.preventDefault();
     setErrorMsg("");
+    setInfoMsg("");
 
     if (!email || !password) {
       setErrorMsg("Please enter both email and password.");
@@ -22,15 +24,19 @@ const Login = () => {
     }
 
     try {
-      // Firebase Login
-      await signInWithEmailAndPassword(auth, email, password);
+      const userCredential = await signInWithEmailAndPassword(auth, email, password);
+
+      // Check if email is verified
+      if (!userCredential.user.emailVerified) {
+        setErrorMsg("Please verify your email before logging in.");
+        return;
+      }
 
       alert("Login Successful!");
-      navigate("/home"); // Redirect to home page
+      navigate("/home");
 
     } catch (error) {
       console.log(error);
-
       if (error.code === "auth/user-not-found") {
         setErrorMsg("No user found with this email.");
       } else if (error.code === "auth/wrong-password") {
@@ -41,13 +47,35 @@ const Login = () => {
     }
   };
 
+
+  // ✅ Reset Password Function
+  const handlePasswordReset = async () => {
+    setErrorMsg("");
+    setInfoMsg("");
+
+    if (!email) {
+      setErrorMsg("Enter your email to reset password.");
+      return;
+    }
+
+    try {
+      await sendPasswordResetEmail(auth, email);
+      setInfoMsg("Password reset email sent! Check your inbox.");
+    } catch (error) {
+      console.log(error);
+      setErrorMsg("Failed to send reset email.");
+    }
+  };
+
+
   return (
     <div className="login-wrapper">
       <div className="login-card">
-        
-        <form className="login-form" onSubmit={handleLogin}>
 
+        <form className="login-form" onSubmit={handleLogin}>
+          
           {errorMsg && <p className="error-message">{errorMsg}</p>}
+          {infoMsg && <p className="info-message">{infoMsg}</p>}
 
           {/* Email */}
           <div className="input-box">
@@ -71,9 +99,11 @@ const Login = () => {
             />
           </div>
 
-          <p className="forgot">Forgot Password</p>
+          {/* Forgot Password */}
+          <p className="forgot" onClick={handlePasswordReset} style={{cursor: "pointer"}}>
+            Forgot Password?
+          </p>
 
-          {/* Divider */}
           <div className="divider-with-text">
             <span className="divider-text">Login With</span>
           </div>
@@ -84,7 +114,6 @@ const Login = () => {
             <div className="social-circle google"><FaGoogle /></div>
           </div>
 
-          {/* Login Button */}
           <button className="login-btn">Login</button>
 
           <p className="signup-text">
