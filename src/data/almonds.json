@@ -8,7 +8,7 @@
     "price": 939,
     "offer": "27% off",
     "tag": "NEW ARRIVALS",
-    "weight": "₹100g",
+    "weight": "100g",
     "image": "Almonds.png"
 
   },
@@ -21,7 +21,7 @@
     "price": 991,
     "offer": "23% off",
     "tag": "BESTSELLER",
-    "weight": "₹99.1/100g",
+    "weight": "100g",
     "image": "Almonds.png"
 
   },
@@ -34,7 +34,7 @@
     "price": 999,
     "offer": "17% off",
     "tag": "PREMIUM",
-    "weight": "₹100g",
+    "weight": "100g",
     "image": "Almonds.png"
 
   },
@@ -47,7 +47,7 @@
     "price": 1050,
     "offer": "31% off",
     "tag": "PREMIUM",
-    "weight": "₹100g",
+    "weight": "100g",
     "image": "Almonds.png"
 
   }

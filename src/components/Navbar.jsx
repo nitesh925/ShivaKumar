@@ -55,7 +55,7 @@ const Navbar = () => {
             onClick={() => navigate("/home")}
             style={{ cursor: "pointer" }}
           >
-            <img src="/images/SKLogomain.png" alt="SK Logo" className="logo-img" />
+            <img src="/images/SKLogomain.png" alt="SK Logo" className="logo-img" /> Dry Fruits
           </div>
 
           {/* RIGHT ICONS */}
