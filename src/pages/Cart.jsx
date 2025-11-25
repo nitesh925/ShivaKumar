@@ -1,9 +1,52 @@
-import React from "react";
+import React, { useMemo } from "react";
 import { useCart } from "../cartContext";
 import "../styles/Cart.css";
 
 export default function Cart() {
   const { cart, increaseQty, decreaseQty, removeFromCart } = useCart();
+
+  // ---------------- CALCULATIONS ----------------
+  const { mrpTotal, discountTotal, subTotal } = useMemo(() => {
+    let mrp = 0;
+    let discount = 0;
+
+    cart.forEach((item) => {
+      const itemMRP = item.mrp * item.qty;
+      const itemPrice = item.price * item.qty;
+
+      mrp += itemMRP;
+      discount += itemMRP - itemPrice;
+    });
+
+    return {
+      mrpTotal: mrp,
+      discountTotal: discount,
+      subTotal: mrp - discount,
+    };
+  }, [cart]);
+
+
+  // ---------------- MANUAL ORDER WHATSAPP ----------------
+  const sendManualOrder = () => {
+    const orderText = cart
+      .map(
+        (item) =>
+          `${item.title} (${item.qty} qty) - ₹${item.price * item.qty}`
+      )
+      .join("%0A");
+
+    const total = cart.reduce(
+      (acc, item) => acc + item.price * item.qty,
+      0
+    );
+
+    const finalMessage = `Hello, I would like to place a manual order:%0A%0A${orderText}%0A%0ATotal: ₹${total}/-`;
+
+    const whatsappNumber = "919040555925"; // Your WhatsApp number
+
+    window.open(`https://wa.me/${whatsappNumber}?text=${finalMessage}`, "_blank");
+  };
+
 
   return (
     <div className="cart-drawer">
@@ -47,11 +90,58 @@ export default function Cart() {
         </div>
       )}
 
+      {/* ---------------- ORDER SUMMARY ---------------- */}
       {cart.length > 0 && (
-        <div className="checkout-bar">
-          <button className="checkout-btn">Place Order Now</button>
+        <div className="order-summary-box">
+          <h2>Order Summary</h2>
+
+          <div className="row">
+            <p>MRP:</p>
+            <p>₹{mrpTotal}</p>
+          </div>
+
+          <div className="row">
+            <p>Offer Discount</p>
+            <p>- ₹{discountTotal}</p>
+          </div>
+
+          <div className="row">
+            <p>Reward Points</p>
+            <p>- ₹0</p>
+          </div>
+
+          <div className="row sub">
+            <p>Sub-Total:</p>
+            <p>₹{subTotal}</p>
+          </div>
+
+          <hr />
+
+          <div className="final-row">
+            <h3>Total Price</h3>
+            <h3>₹{subTotal}/-</h3>
+          </div>
+
+          <p className="note">(Inclusive of all taxes)</p>
+          <p className="note">*Coupon code is applied at checkout.</p>
+          <p className="note">*Shipping is calculated at checkout.</p>
         </div>
       )}
+
+      {/* ---------------- CHECKOUT BUTTONS ---------------- */}
+      {cart.length > 0 && (
+        <div className="checkout-bar">
+
+          <button className="checkout-btn">Place Order Now</button>
+
+          {/* Manual Order Option */}
+          <div className="manual-order" onClick={sendManualOrder}>
+            <p>Order Manually</p>
+          </div>
+
+        </div>
+      )}
+
     </div>
   );
 }
