@@ -1,98 +1,92 @@
-import React, { useState, useRef } from 'react';
-import { db } from '../firebase/firebaseConfig'; // Import Firebase config
-import { collection, addDoc } from 'firebase/firestore';
-import emailjs from 'emailjs-com'; // Import EmailJS
-import '../styles/Contact.css'; // Import CSS
+import React from "react";
+import "../styles/contact.css";
 
-const ContactPage = () => {
-    const [formData, setFormData] = useState({ name: '', email: '', message: '' });
-    const [loading, setLoading] = useState(false);
-    const formRef = useRef(null); // Reference to the form element
+const ContactUs = () => {
+  return (
+    <div className="contact-wrapper">
 
-    const handleChange = (e) => {
-        setFormData({ ...formData, [e.target.name]: e.target.value });
-    };
+      {/* HEADER SECTION */}
+      <div className="contact-banner">
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        setLoading(true);
+  {/* LOGO IN MIDDLE */}
+  <img
+    src="/images/omshantilog.png"
+    alt="logo"
+    className="contact-logo"
+  />
 
-        try {
-            // Save the form data to Firestore
-            await addDoc(collection(db, 'contacts'), { ...formData, timestamp: new Date() });
-            alert("Message sent successfully!");
-
-            // Send form data via EmailJS
-            await emailjs.sendForm(
-                'service_tjv0ql8', // Your service ID
-                'template_jddg67m', // Your template ID
-                formRef.current, // Pass the form reference
-                'xIzeCj-gZNtK2_X5p' // Your user ID
-            );
-            alert("Email sent successfully!");
-
-            // Reset form data
-            setFormData({ name: '', email: '', message: '' });
-            formRef.current.reset(); // Reset the form
-
-        } catch (error) {
-            console.error("Error adding document or sending email: ", error);
-            alert("Error sending message");
-        } finally {
-            setLoading(false);
-        }
-    };
-
-    return (
-        <div className="contact-section">
-            <div className="contact-container">
-                {/* Left Side: Image */}
-                <div className="contact-image">
-                    <img src="images/contactus.png" alt="Contact Us" />
-                </div>
-                
-
-                {/* Right Side: Form */}
-                <div className="contact-form-container">
-                    
-                    <h2>Contact Us</h2>
-                    <p>We’d love to hear from you! Fill out the form below and we’ll get back to you soon.</p>
-                    <form onSubmit={handleSubmit} className="contact-form" ref={formRef}>
-                        <input
-                            type="text"
-                            name="name"
-                            placeholder="Your Name"
-                            value={formData.name}
-                            onChange={handleChange}
-                            required
-                        />
-                        <input
-                            type="email"
-                            name="email"
-                            placeholder="Your Email"
-                            value={formData.email}
-                            onChange={handleChange}
-                            required
-                        />
-                        <textarea
-                            name="message"
-                            placeholder="Your Message"
-                            value={formData.message}
-                            onChange={handleChange}
-                            required
-                        ></textarea>
-                        <button type="submit" disabled={loading}>{loading ? "Sending..." : "Send Message"}</button>
-                    </form>
-                    <div className="contact-info">
-    <p><strong>Email:</strong><br></br> <a href="mailto:srilaxmiganapati@gmail.com">srilaxmiganapati@gmail.com</a></p>
-    <p><strong>Phone:</strong> <br></br>Vamsi:<a href="tel:+919392223311"> +91 9392223311</a><br></br>Dinesh:<a href="tel:+917894006402"> +91 7894006402</a></p>
-    <p><strong>Address:</strong> <br></br><a href="https://www.google.com/maps?q=Jeypore,+764001+Dist.+Koraput" target="_blank" rel="noopener noreferrer">Jeypore, 764001 Dist. Koraput</a></p>
+  <h1>Contact Us</h1>
+  <p>Home — Contact Us</p>
 </div>
 
-                </div>
-            </div>
+
+      {/* GET IN TOUCH TEXT */}
+      <div className="get-touch">
+        <h2>Get In Touch</h2>
+        <p>
+          
+          We would be happy to assist you.
+          
+          Let us know your queries or what you are looking for.
+        </p>
+      </div>
+
+      {/* FORM */}
+      <div className="contact-form">
+        <label>Your Name *</label>
+        <input type="text" placeholder="Your Name" />
+
+        <label>Mobile No. *</label>
+        <input type="text" placeholder="Mobile No." />
+
+        <label>Email Id *</label>
+        <input type="text" placeholder="Email Id" />
+
+        <label>Subject</label>
+        <input type="text" placeholder="Subject" />
+
+        <label>Write Your Message *</label>
+        <textarea placeholder="Write Your Message"></textarea>
+
+        <button className="send-btn">Send Now</button>
+      </div>
+
+      {/* CONTACT DETAILS SECTION */}
+      <div className="contact-details">
+        <h2>Contact Us</h2>
+
+        <div className="detail-box">
+          <p className="title">📞 Reach us on call/WhatsApp</p>
+          <p className="info">+91-9966394544</p>
         </div>
-    );
+
+        <div className="detail-box">
+          <p className="title">📧 Email Address</p>
+          <p className="info">srinusunkari544@gmail.com</p>
+        </div>
+
+        <div className="detail-box">
+          <p className="title">📍 Store Location</p>
+          <p className="info">
+            Shiva Kumar General Store<br />
+            Near Bus Stop, Kasibugga, Andhra Pradesh 532222
+          </p>
+          <a
+    className="google-map-link"
+    href="https://maps.app.goo.gl/KT4mzYVx2xux7HGVA"
+    target="_blank"
+    rel="noopener noreferrer"
+  >
+    <p className="info"></p>
+    View on Google Maps
+  </a>
+        </div>
+        
+
+      </div>
+
+    </div>
+  );
 };
 
-export default ContactPage;
+export default ContactUs;
