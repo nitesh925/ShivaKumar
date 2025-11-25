@@ -1,0 +1,36 @@
+mutation CreateDemoUser @auth(level: PUBLIC, insecureReason: "This operation is for demo purposes and is safe to expose to the public.") {
+  user_insert(data: {
+    id: "550e8400-e29b-41d4-a716-446655440000",
+    displayName: "demouser1",
+    email: "demouser1@example.com",
+		createdAt: "2024-04-26T12:00:00Z"
+  })
+}
+
+query ListProducts @auth(level: PUBLIC, insecureReason: "This operation is safe to expose to the public") {
+  products {
+    id
+    name
+    description
+    price
+  }
+}
+
+mutation CreateOrder($userId: UUID!, $totalAmount: Float!, $status: String!, $orderDate: Timestamp!) @auth(level: USER) {
+  order_insert(data: {
+    userId: $userId,
+    totalAmount: $totalAmount,
+    status: $status,
+		orderDate: $orderDate,
+		createdAt_expr: "request.time"
+  })
+}
+
+query MyOrders @auth(level: USER) {
+  orders(where: {userId: {eq_expr: "auth.uid"}}) {
+    id
+    totalAmount
+    status
+    orderDate
+  }
+}

@@ -1,0 +1,54 @@
+[
+  {
+    "id": 1,
+    "title": "Nutraj Australian Almonds Badam",
+    "brand": "NUTRAJ",
+    "rating": 5.0,
+    "mrp": 1298,
+    "price": 939,
+    "offer": "27% off",
+    "tag": "NEW ARRIVALS",
+    "weight": "₹100g",
+    "image": "Almonds.png"
+
+  },
+  {
+    "id": 2,
+    "title": "Nutraj California Almond Kernels 1kg",
+    "brand": "NUTRAJ",
+    "rating": 4.8,
+    "mrp": 1299,
+    "price": 991,
+    "offer": "23% off",
+    "tag": "BESTSELLER",
+    "weight": "₹99.1/100g",
+    "image": "Almonds.png"
+
+  },
+  {
+    "id": 3,
+    "title": "Nutraj Anmol Jumbo Size Sonora Almond",
+    "brand": "NUTRAJ ANMOL",
+    "rating": 4.9,
+    "mrp": 1199,
+    "price": 999,
+    "offer": "17% off",
+    "tag": "PREMIUM",
+    "weight": "₹100g",
+    "image": "Almonds.png"
+
+  },
+  {
+    "id": 4,
+    "title": "Nutraj Anmol Mamra Almond",
+    "brand": "NUTRAJ ANMOL",
+    "rating": 4.8,
+    "mrp": 1499,
+    "price": 1050,
+    "offer": "31% off",
+    "tag": "PREMIUM",
+    "weight": "₹100g",
+    "image": "Almonds.png"
+
+  }
+]

@@ -1,0 +1,12 @@
+/* Only needed if not using Tailwind */
+.side-menu {
+  width: 300px;
+  background: white;
+  height: 100%;
+  position: fixed;
+  left: 0;
+  top: 0;
+  padding: 20px;
+  transition: transform .3s ease;
+  box-shadow: 2px 0 10px rgba(0,0,0,0.2);
+}

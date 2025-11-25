@@ -1,73 +1,140 @@
-.auth-container {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    height: 100vh; /* Full height of the viewport */
-    background-color: #f0f0f0; /* Light background color */
-    padding: 20px;
+/* Wrapper */
+.login-wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding: 20px;
 }
 
-.auth-container h2 {
-    margin-bottom: 20px;
-    font-size: 2em;
-    color: #333; /* Darker text color for contrast */
+/* Card */
+.login-card {
+  width: 100%;
+  max-width: 400px;
+  background: white;
+  padding: 25px;
+  border-radius: 25px;
+  box-shadow: 0px 10px 25px rgba(0, 0, 0, 0.12);
+  position: relative;
 }
 
-form {
-    background: white; /* White background for the form */
-    border-radius: 8px; /* Rounded corners */
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow */
-    padding: 30px; /* Padding around the form elements */
-    width: 100%;
-    max-width: 400px; /* Max width for the form */
+/* Round Badge */
+.login-badge {
+  width: 120px;
+  height: 120px;
+  border: 2px solid #000;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: 600;
+  margin: 0 auto 20px;
+  font-size: 20px;
 }
 
-input {
-    width: 100%; /* Full width for inputs */
-    padding: 10px; /* Padding inside inputs */
-    margin: 10px 0; /* Margin between inputs */
-    border: 1px solid #ccc; /* Light border */
-    border-radius: 4px; /* Slightly rounded corners */
-    font-size: 1em; /* Font size */
+/* Form */
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
 }
 
-input:focus {
-    border-color: #868686; /* Change border color on focus */
-    outline: none; /* Remove default outline */
+/* Input Box */
+.input-box {
+  display: flex;
+  align-items: center;
+  border: 2px solid #000;
+  padding: 14px;
+  border-radius: 15px;
+  gap: 10px;
 }
 
-button {
-    background-color: #333; /* Primary button color */
-    color: white; /* White text on button */
-    border: none; /* No border */
-    border-radius: 4px; /* Slightly rounded corners */
-    padding: 10px; /* Padding for button */
-    cursor: pointer; /* Pointer cursor on hover */
-    font-size: 1em; /* Font size */
-    transition: background-color 0.3s; /* Smooth transition for background color */
+.input-box .icon {
+  font-size: 18px;
 }
 
-button:hover {
-    background-color: #555; /* Darker color on hover */
-}
-.register-button {
-    margin-top: 10px; /* Adds some space above the button */
-    padding: 10px; /* Adds padding for better appearance */
-    background-color: #333; /* Green background */
-    width: 200px;
-    height: 40px;
-    color: white; /* White text */
-    border: none; /* No border */
-    border-radius: 5px; /* Rounded corners */
-    cursor: pointer; /* Changes cursor on hover */
+.input-box input {
+  width: 100%;
+  border: none;
+  outline: none;
+  font-size: 15px;
 }
 
-.register-button:hover {
-    background-color: #b8b8b8; /* Darker green on hover */
+/* Forgot password */
+.forgot {
+  margin-top: -10px;
+  color: #ad5617;
+  font-size: 14px;
+  cursor: pointer;
+  font-weight: 600;
 }
-.register-cont{
-    display: flex;
-    flex-wrap: wrap;
-    gap: 150px;
+
+/* Divider */
+.divider-with-text {
+  display: flex;
+  align-items: center;
+  text-align: center;
+}
+
+.divider-with-text::before,
+.divider-with-text::after {
+  content: "";
+  flex: 1;
+  border-bottom: 1px solid #ccc;
+}
+
+.divider-with-text:not(:empty)::before { margin-right: 10px; }
+.divider-with-text:not(:empty)::after { margin-left: 10px; }
+
+.divider-text {
+  font-size: 14px;
+  color: #444;
+}
+
+/* Social Icons */
+.social-row {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+.social-circle {
+  width: 55px;
+  height: 55px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 22px;
+  color: #fff;
+  cursor: pointer;
+}
+
+.fb { background: #3b5998; }
+.google { background: #4285F4; }
+
+/* Login Button */
+.login-btn {
+  width: 100%;
+  padding: 14px;
+  border: none;
+  border-radius: 30px;
+  background: linear-gradient(90deg, #ad5617, #883a02);
+  font-size: 18px;
+  color: white;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+/* Bottom Signup Text */
+.signup-text {
+  text-align: center;
+  font-size: 14px;
+  margin-top: 8px;
+  color: #000;
+}
+
+.signup-text span {
+  color: #ad5617;
+  font-weight: 700;
+  cursor: pointer;
 }

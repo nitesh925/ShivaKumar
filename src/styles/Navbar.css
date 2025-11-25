@@ -1,24 +1,54 @@
-/* Navbar Styling */
+/* NAVBAR TOP */
 .navbar {
-  background-color: #330000;
+  background-color: #f8eee0;
   padding: 10px 24px;
-  color: #ffffff;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+  color: #ad5617;
   width: 100%;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
-  position: fixed;      /* ✅ stays at top */
+  position: fixed;
   top: 0;
   left: 0;
-  font-size: 1.2rem;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
   z-index: 1000;
 }
 
-/* Push page content below navbar */
+/* 🟩 FIX NAVBAR OVERLAP (RESPONSIVE PADDING) */
+:root {
+  --navbar-height: 100px;   /* Mobile height */
+}
+
+@media (min-width: 768px) {
+  :root {
+    --navbar-height: 80px;  /* Desktop height */
+  }
+}
+
 body {
   margin: 0;
-  padding-top: 70px;   /* ✅ same as navbar height */
+  padding-top: var(--navbar-height);
+}
+
+/* END FIX */
+
+/* NAVBAR TITLE */
+.navbar-title {
+  font-family: 'Great Vibes', cursive;
+  font-size: 32px;
+  color: #ad5617;
+  margin-left: 6px;
+}
+
+.logo-link {
+  display: flex;
+  align-items: center;
+  color: #ad5617;
+  text-decoration: none;
+  font-family: 'Great Vibes', cursive;
+  font-size: 30px;
+  font-weight: bold;
+}
+
+.logo-link:hover {
+  opacity: 0.9;
 }
 
 /* Logo */
@@ -27,108 +57,196 @@ body {
   align-items: center;
   font-size: 30px;
   font-weight: bold;
-  color: #ffffff;
-  font-family: 'Great Vibes', cursive;
+  font-family: "Great Vibes", cursive;
+  color: #ad5617;
 }
 
 .logo-img {
   height: 2.5em;
-  width: auto;
   margin-right: 8px;
 }
 
-/* Links */
-.navbar-links {
-  display: flex;
-  list-style: none;
-  gap: 15px;
-}
-
-.navbar-links li {
-  display: inline-block;
-}
-
-.navbar-links a {
-  color: #ffffff;
-  text-decoration: none;
-  padding: 10px;
-  transition: 0.3s;
-  border-radius: 5px;
-}
-
-.navbar-links a:hover {
-  background-color: #D09683;
-}
-
-/* Mobile Menu */
-.menu-icon {
-  display: none;
-  font-size: 24px;
-  cursor: pointer;
-  align-self: center;
-}
-
-/* Mobile Responsive */
-@media screen and (max-width: 768px) {
-  .navbar {
-    flex-direction: column;
-    align-items: flex-start;
-    padding: 10px;
-  }
-
-  .menu-icon {
-    display: block;
-  }
-
-  .navbar-links {
-    display: none;
-    flex-direction: column;
-    position: absolute;
-    top: 60px;
-    left: 0;
-    width: 100%;
-    background: rgba(51, 51, 51, 0.9);
-    padding: 10px;
-    text-align: center;
-    z-index: 20;
-    backdrop-filter: blur(3px);
-  }
-
-  .navbar-links.active {
-    display: flex;
-  }
-
-  .navbar-links li {
-    padding: 5px 0;
-  }
-
-  .navbar-links a {
-    display: block;
-    color: #ffffff;
-    padding: 10px;
-    border-radius: 5px;
-  }
-
-  .navbar-links a:hover {
-    background-color: #E7E8D1;
-    color: #330000;
-  }
-
-  .navbar-logo {
-    font-size: 26px;
-  }
-
-  .logo-img {
-    height: 2em;
-  }
-}
-
-@import url('https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap');
-
 .navbar-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.menu-icon {
+  font-size: 30px;
+  cursor: pointer;
+  color: #ad5617;
+  display: block;
+}
+
+/* SIDEBAR */
+.sidebar {
+  position: fixed;
+  top: 0;
+  right: -100%;
+  width: 80%;
+  height: 100%;
+  background: white;
+  padding: 25px;
+  color: #333;
+  transition: 0.3s ease;
+  overflow-y: auto;
+  z-index: 2000;
+}
+
+.sidebar.open {
+  right: 0;
+}
+
+.sidebar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.close-icon {
+  cursor: pointer;
+  font-size: 32px;
+  color: #333;
+}
+
+/* Login / Signup */
+.auth-buttons {
+  display: flex;
+  gap: 25px;
+  margin: 20px 0;
+}
+
+.login-btn {
+  padding: 8px 20px;
+  border: 2px solid #ad5617;
+  border-radius: 8px;
+  color: #ad5617;
+  text-decoration: none;
+}
+
+.signup-btn {
+  color: #ad5617;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+/* Category List */
+.sidebar-links {
+  list-style: none;
+  padding: 0;
+}
+
+.category-row {
+  font-size: 20px;
+  font-weight: 600;
+  padding: 15px 0;
+  cursor: pointer;
+  border-bottom: 1px solid #ddd;
+  display: flex;
+  justify-content: space-between;
+  color: #333;
+}
+
+/* Submenu */
+.submenu {
+  list-style: none;
+  padding-left: 15px;
+  animation: fadeIn 0.3s ease;
+}
+
+.submenu li {
+  padding: 10px 0;
+}
+
+.submenu a {
+  color: #ad5617;
+  text-decoration: none;
+}
+
+/* Logout */
+.logout-btn {
+  display: block;
+  margin-top: 25px;
+  color: #ad1000;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+/* Overlay */
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
   width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.4);
+  z-index: 1500;
+}
+
+/* Cart Icon */
+.cart-icon {
+  color: #ad5617;
+  font-size: 28px;
+  cursor: pointer;
+  margin-right: 15px;
+}
+
+.cart-icon svg {
+  font-size: 30px;
+}
+
+.sidebar-cart-row {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  font-family: 'Arial', sans-serif;
+  gap: 12px;
+  padding: 15px 18px;
+  font-size: 18px;
+  color: #ad5617;
+  font-weight: 600;
+  cursor: pointer;
 }
+
+.sidebar-cart-row:hover {
+  background: #f4e4d1;
+}
+
+.right-icons {
+  display: flex;
+  align-items: center;
+  gap: 0px;
+}
+
+.cart-icon {
+  color: #ad5617;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+
+.cart-icon svg {
+  font-size: 32px;
+}
+
+.cart-icon {
+  position: relative;
+}
+
+.cart-count {
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  background: #d32f2f;
+  color: white;
+  font-size: 12px;
+  min-width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2px;
+}
+
+/* Import font */
+@import url("https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap");

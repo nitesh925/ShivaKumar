@@ -1,20 +1,28 @@
-// firebase.js or firebaseConfig.js
-import { initializeApp } from 'firebase/app';
-import { getFirestore } from 'firebase/firestore';
-import { getAuth, RecaptchaVerifier, PhoneAuthProvider } from 'firebase/auth'; // Added RecaptchaVerifier and PhoneAuthProvider
+// Import Firebase core
+import { initializeApp } from "firebase/app";
 
+// Import Firebase services
+import { getAuth } from "firebase/auth";
+import { getFirestore } from "firebase/firestore";
+import { getAnalytics } from "firebase/analytics";
+
+// Your Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyBJ2oFH09X4ucey0zKiPXjHFwL88XC9wV0",
-  authDomain: "lgevents.firebaseapp.com",
-  projectId: "lgevents",
-  storageBucket: "lgevents.firebasestorage.app",
-  messagingSenderId: "970191213609",
-  appId: "1:970191213609:web:17baadafe92d9870653838",
-  measurementId: "G-R8WL75QEJE"
+  apiKey: "AIzaSyC12SPuuR1h42QzFNf-QIOTMMk9g73xl98",
+  authDomain: "shivakumar-stores.firebaseapp.com",
+  projectId: "shivakumar-stores",
+  storageBucket: "shivakumar-stores.firebasestorage.app",
+  messagingSenderId: "651050789626",
+  appId: "1:651050789626:web:cc1c9395f84c5bc9187743",
+  measurementId: "G-YV1E4FNHDQ"
 };
 
+// Initialize Firebase
 const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
-const auth = getAuth(app);
 
-export { db, auth, RecaptchaVerifier, PhoneAuthProvider }; // Export added functions
+// Initialize services
+export const auth = getAuth(app);
+export const db = getFirestore(app);
+
+// Optional: analytics (only works on https or localhost)
+export const analytics = getAnalytics(app);

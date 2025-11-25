@@ -1,65 +1,159 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../authContext";
 import "../styles/Navbar.css";
+import { useCart } from "../cartContext";
+
 import MenuIcon from "@mui/icons-material/Menu";
 import CloseIcon from "@mui/icons-material/Close";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import ExpandLessIcon from "@mui/icons-material/ExpandLess";
+import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 
 const Navbar = () => {
-  const { currentUser, logout } = useAuth();
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const { currentUser, userData, logout } = useAuth(); // ✅ FIXED
+  const navigate = useNavigate();
 
-  const handleLogout = (e) => {
-    e.preventDefault();
-    logout();
-    setIsMobileMenuOpen(false); // Close menu on logout
+  const { cart } = useCart();
+  const cartCount = cart.reduce((a, b) => a + b.qty, 0);
+
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [openCategory, setOpenCategory] = useState(null);
+
+  const toggleCategory = (name) => {
+    setOpenCategory(openCategory === name ? null : name);
   };
+
+  const handleLogout = () => {
+    logout();
+    setIsSidebarOpen(false);
+  };
+
   useEffect(() => {
-    if (isMobileMenuOpen) {
-      document.body.classList.add("no-scroll");
-    } else {
-      document.body.classList.remove("no-scroll");
-    }
-  }, [isMobileMenuOpen]);
+    document.body.style.overflow = isSidebarOpen ? "hidden" : "auto";
+  }, [isSidebarOpen]);
+
+  const categories = [
+    "Nuts",
+    "Dried Fruits",
+    "Dates",
+    "Seeds",
+    "Berries",
+    "Exotic Nuts",
+    "Mixes",
+    "Whole Spices",
+  ];
 
   return (
     <>
+      {/* TOP NAVBAR */}
       <nav className="navbar">
         <div className="navbar-container">
-        <div className="navbar-logo">
-          <img src="images/logo1.png" alt="LG Events Logo" className="logo-img" />LG Events
-        </div>
-
-
-          {/* Hamburger Menu Icon */}
-          <div className="menu-icon" onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}>
-            {isMobileMenuOpen ? <CloseIcon /> : <MenuIcon />}
+          {/* LOGO */}
+          <div
+            className="navbar-logo"
+            onClick={() => navigate("/home")}
+            style={{ cursor: "pointer" }}
+          >
+            <img src="/images/SKLogomain.png" alt="SK Logo" className="logo-img" />
           </div>
 
-          {/* Navbar Links */}
-          <ul className={`navbar-links ${isMobileMenuOpen ? "active" : ""}`}>
-            <li><Link to="/home" onClick={() => setIsMobileMenuOpen(false)}>Home</Link></li>
-            <li><Link to="/about" onClick={() => setIsMobileMenuOpen(false)}>Events</Link></li>
-            <li><Link to="/profile" onClick={() => setIsMobileMenuOpen(false)}>Profile</Link></li>
-            {/*<li><Link to="/matches" onClick={() => setIsMobileMenuOpen(false)}>Matches</Link></li>*/}
-            <li><Link to="/contact" onClick={() => setIsMobileMenuOpen(false)}>Contact</Link></li>
+          {/* RIGHT ICONS */}
+          <div className="right-icons">
+            {/* CART WITH COUNT */}
+            <div className="cart-icon" onClick={() => navigate("/cart")}>
+              <ShoppingCartOutlinedIcon />
+              {cartCount > 0 && <span className="cart-count">{cartCount}</span>}
+            </div>
 
-            {currentUser ? (
-              <li>
-                <Link to="/" onClick={handleLogout}>Logout</Link>
-              </li>
-            ) : (
-              <>
-                {/*<li><Link to="/login" onClick={() => setIsMobileMenuOpen(false)}>Login</Link></li>
-                <li><Link to="/register" onClick={() => setIsMobileMenuOpen(false)}>Register</Link></li>*/}
-              </>
-            )}
-          </ul>
+            {/* MENU */}
+            <div className="menu-icon" onClick={() => setIsSidebarOpen(true)}>
+              <MenuIcon />
+            </div>
+          </div>
         </div>
       </nav>
 
-      {/* Overlay background when menu is open */}
-      {isMobileMenuOpen && <div className="navbar-overlay" onClick={() => setIsMobileMenuOpen(false)}></div>}
+      {/* SIDEBAR */}
+      <div className={`sidebar ${isSidebarOpen ? "open" : ""}`}>
+        <div className="sidebar-header">
+          {currentUser ? `Hi, ${currentUser.displayName || "User"}` : "Shop"}
+
+          <CloseIcon
+            className="close-icon"
+            onClick={() => setIsSidebarOpen(false)}
+          />
+        </div>
+
+        {/* LOGIN / SIGNUP */}
+        {!currentUser && (
+          <div className="auth-buttons">
+            <Link
+              to="/login"
+              className="login-btn"
+              onClick={() => setIsSidebarOpen(false)}
+            >
+              Login
+            </Link>
+
+            <Link
+              to="/register"
+              className="signup-btn"
+              onClick={() => setIsSidebarOpen(false)}
+            >
+              Sign up →
+            </Link>
+          </div>
+        )}
+
+        {/* CART OPTION */}
+        <div
+          className="sidebar-cart-row"
+          onClick={() => {
+            navigate("/cart");
+            setIsSidebarOpen(false);
+          }}
+        >
+          <ShoppingCartOutlinedIcon /> <span>My Cart</span>
+        </div>
+
+        {/* CATEGORIES */}
+        <ul className="sidebar-links">
+          {categories.map((cat) => (
+            <li key={cat}>
+              <div className="category-row" onClick={() => toggleCategory(cat)}>
+                {cat}
+                {openCategory === cat ? <ExpandLessIcon /> : <ExpandMoreIcon />}
+              </div>
+
+              {openCategory === cat && (
+                <ul className="submenu">
+                  <li>
+                    <Link
+                      to={`/category/${cat}`}
+                      onClick={() => setIsSidebarOpen(false)}
+                    >
+                      View All
+                    </Link>
+                  </li>
+                </ul>
+              )}
+            </li>
+          ))}
+        </ul>
+
+        {/* LOGOUT */}
+        {currentUser && (
+          <Link to="/" className="logout-btn" onClick={handleLogout}>
+            Logout
+          </Link>
+        )}
+      </div>
+
+      {/* OVERLAY */}
+      {isSidebarOpen && (
+        <div className="overlay" onClick={() => setIsSidebarOpen(false)}></div>
+      )}
     </>
   );
 };

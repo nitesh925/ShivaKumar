@@ -14,7 +14,7 @@ body{
     margin: 3%;
     padding: 3%;
     border-radius: 15px;
-    background-color:#ffd6cc;
+    background-color:#ad5617;
     text-align: center;
 }
 /* Main container for the Home page */
@@ -92,7 +92,7 @@ body{
     justify-content: center;
     background-color: white;
     border-radius: 10px;
-    padding: 10px;
+    padding: 0px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     text-align: center;
     transition: transform 0.3s, box-shadow 0.3s;
@@ -101,8 +101,8 @@ body{
 }
 
 .card img {
-    width: 90px; /* Increase image width */
-    height: 90px; /* Increase image height */
+    width: 100%; /* Increase image width */
+    height: 95px; /* Increase image height */
     object-fit: contain;
     margin-bottom: 5px; /* Reduce space below image */
 }
@@ -160,6 +160,7 @@ body{
     letter-spacing: .3px;
   }
   .video-container {
+    
     width: 100%;
     display: flex;
     justify-content: center;
