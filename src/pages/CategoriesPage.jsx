@@ -3,14 +3,14 @@ import { Link } from "react-router-dom";
 import "../styles/CategoriesPage.css";
 
 const categories = [
-  { name: "Nuts", image: "/images/nuts.jpg", path: "/category/nuts" },
-  { name: "Dried Fruits", image: "/images/driedfruits.jpg", path: "/category/driedfruits" },
-  { name: "Dates", image: "/images/dates.jpg", path: "/category/dates" },
-  { name: "Seeds", image: "/images/seeds.jpg", path: "/category/seeds" },
-  { name: "Berries", image: "/images/berries.jpg", path: "/category/berries" },
-  { name: "Exotic Nuts", image: "/images/exoticnuts.jpg", path: "/category/exoticnuts" },
-  { name: "Mixes", image: "/images/mixes.jpg", path: "/category/mixes" },
-  { name: "Whole Spices", image: "/images/spices.jpg", path: "/category/spices" },
+  { name: "Dried Fruits", image: "/images/driedfruits.png", path: "/category/driedfruits" },
+  { name: "Dates", image: "/images/datess.png", path: "/category/dates" },
+  { name: "Nuts", image: "/images/nuts.png", path: "/category/nuts" },
+  { name: "Seeds", image: "/images/seeds.png", path: "/category/seeds" },
+  { name: "Berries", image: "/images/berries.png", path: "/category/berries" },
+  { name: "Exotic Nuts", image: "/images/exoticnuts.png", path: "/category/exoticnuts" },
+  { name: "Mixes", image: "/images/mixes.png", path: "/category/mixes" },
+  { name: "Dry Mango", image: "/images/driedmango.png", path: "/category/driedmango" },
 ];
 
 const CategoriesPage = () => {
