@@ -34,14 +34,15 @@ const Navbar = () => {
   }, [isSidebarOpen]);
 
   const categories = [
-    "Nuts",
     "Dried Fruits",
     "Dates",
+    "Nuts",
     "Seeds",
     "Berries",
     "Exotic Nuts",
     "Mixes",
-    "Whole Spices",
+    "Dry Mango",
+    "Gifting",
   ];
 
   return (

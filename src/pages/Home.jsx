@@ -121,6 +121,27 @@ const goToCategories = () => {
           <br></br>
          
         </div>
+
+        <div className="gift-section">
+  <div className="gift-image-container">
+    <img
+      src="/images/gift.png"
+      alt="Gift Boxes"
+      className="gift-main-image"
+    />
+  </div>
+
+  <div className="gift-text-block">
+    <p className="gift-small-title">Handcrafted</p>
+    <h2 className="gift-title">Thoughtful Gift Boxes</h2>
+
+    <Link to="/category/Gifting" className="gift-btn">
+  Shop Gift Boxes
+</Link>
+
+  </div>
+</div>
+
         {/* IMAGE + TEXT SECTIONS */}
           <div className="video-section">
       <video

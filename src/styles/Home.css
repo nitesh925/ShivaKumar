@@ -258,6 +258,55 @@ body{
     max-width: 800px;
     margin: 10px auto;
 }
+.gift-section {
+  background: #eee2d0;
+  padding: 35px 20px;
+  
+  margin: 30px 0;
+}
+
+.gift-image-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.gift-main-image {
+  width: 100%;
+  max-width: 450px;
+  border-radius: 15px;
+}
+
+.gift-text-block {
+  margin-top: 20px;
+}
+
+.gift-small-title {
+  font-size: 18px;
+  color: #333;
+  margin-bottom: 5px;
+}
+
+.gift-title {
+  font-size: 30px;
+  font-weight: 700;
+  margin: 0 0 20px;
+  color: #111;
+}
+
+.gift-btn {
+  text-decoration: none !important;
+  color: inherit !important;   /* keep same color */
+  display: inline-block;
+  padding: 10px 20px;
+  border: 2px solid black;
+  border-radius: 50px;
+  font-size: 18px;
+  font-weight: 500;
+}
+
+
+
 /* CAROUSEL BOX */
 .health-carousel {
   margin: 0px 0;

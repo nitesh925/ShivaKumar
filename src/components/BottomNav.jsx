@@ -10,7 +10,7 @@ import ContactMailIcon from "@mui/icons-material/ContactMail";
 import LoginIcon from "@mui/icons-material/Login";
 import SupportAgentIcon from "@mui/icons-material/SupportAgent";
 import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
-
+import WidgetsOutlinedIcon from '@mui/icons-material/WidgetsOutlined';
 import "../styles/BottomNav.css";
 
 const BottomNav = () => {
@@ -25,7 +25,7 @@ const BottomNav = () => {
       </Link>
 
       <Link to="/categories" className={location.pathname === "/categories" ? "active" : ""}>
-        <InfoOutlinedIcon />
+        <WidgetsOutlinedIcon/>
         <span>Category</span>
       </Link>
 
