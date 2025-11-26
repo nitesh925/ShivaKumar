@@ -1,7 +1,7 @@
 /* NAVBAR TOP */
 .navbar {
   background-color: #f8eee0;
-  padding: 10px 24px;
+  padding: 0px 24px;
   color: #ad5617;
   width: 100%;
   position: fixed;
@@ -24,7 +24,7 @@
 
 body {
   margin: 0;
-  padding-top: var(--navbar-height);
+  padding-top: 75px;
 }
 
 /* END FIX */
