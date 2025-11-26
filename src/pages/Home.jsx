@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import '../styles/Home.css';
 import { Link } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 const skills = [
   { id: 'Almonds', name: 'Almonds', image: '/images/Almonds.png' },
@@ -19,10 +20,12 @@ const skills = [
 const Home = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [filteredSkills, setFilteredSkills] = useState([]);
-
+const navigate = useNavigate();
   // Carousel page state
   const [page, setPage] = useState(0);
-
+const goToCategories = () => {
+    navigate("/categories");
+  };
   const renderCards = () => {
     const skillsToRender = searchQuery ? filteredSkills : skills;
 
@@ -119,7 +122,28 @@ const Home = () => {
          
         </div>
         {/* IMAGE + TEXT SECTIONS */}
-        
+          <div className="video-section">
+      <video
+        className="background-video"
+        autoPlay
+        muted
+        loop
+        playsInline
+      >
+        <source src="/videos/banner.mp4" type="video/mp4" />
+      </video>
+
+      <div className="video-content">
+        <p className="intro-text">Introducing</p>
+        <h1 className="title-text">
+          Pure Quality, Perfectly <br /> Yours !
+        </h1>
+
+        <button className="show-more-btn" onClick={goToCategories}>
+          Show more
+        </button>
+      </div>
+    </div>
       </div>
     </>
   );

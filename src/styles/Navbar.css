@@ -9,6 +9,12 @@
   left: 0;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
   z-index: 1000;
+  user-select: none;        /* Standard */
+  -webkit-user-select: none; /* Safari */
+  -ms-user-select: none; 
+}
+* {
+  -webkit-tap-highlight-color: transparent;
 }
 
 /* 🟩 FIX NAVBAR OVERLAP (RESPONSIVE PADDING) */
@@ -25,6 +31,7 @@
 body {
   margin: 0;
   padding-top: 75px;
+  
 }
 
 /* END FIX */
@@ -35,6 +42,10 @@ body {
   font-size: 32px;
   color: #ad5617;
   margin-left: 6px;
+
+  user-select: none;        /* Standard */
+  -webkit-user-select: none; /* Safari */
+  -ms-user-select: none;     /* IE/Edge */
 }
 
 .logo-link {
@@ -45,6 +56,9 @@ body {
   font-family: 'Great Vibes', cursive;
   font-size: 30px;
   font-weight: bold;
+  user-select: none;        /* Standard */
+  -webkit-user-select: none; /* Safari */
+  -ms-user-select: none; 
 }
 
 .logo-link:hover {

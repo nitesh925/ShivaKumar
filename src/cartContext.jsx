@@ -53,7 +53,7 @@ export const CartProvider = ({ children }) => {
         );
       } else {
         updatedCart = [...prev, { ...item, qty: 1 }];
-        toast.success("Added to cart");
+        
       }
 
       saveToDB(updatedCart);
