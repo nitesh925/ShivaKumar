@@ -1,6 +1,7 @@
 import React, { useMemo } from "react";
 import { useCart } from "../cartContext";
 import "../styles/Cart.css";
+import { toast } from "react-toastify";
 
 export default function Cart() {
   const { cart, increaseQty, decreaseQty, removeFromCart } = useCart();

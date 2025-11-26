@@ -6,13 +6,15 @@ import { db } from "./firebase/firebaseConfig";
 import { doc, setDoc, getDoc } from "firebase/firestore";
 import { useAuth } from "./authContext";
 
+import { toast } from "react-toastify";
+
 const CartContext = createContext();
 
 export const CartProvider = ({ children }) => {
   const { currentUser } = useAuth();
   const [cart, setCart] = useState([]);
 
-  // 🔥 Load cart from Firestore when logged in
+  // Load cart from Firestore when logged in
   useEffect(() => {
     const loadCart = async () => {
       if (!currentUser) {
@@ -31,7 +33,7 @@ export const CartProvider = ({ children }) => {
     loadCart();
   }, [currentUser]);
 
-  // 🔥 Save cart to Firestore (only logged in user)
+  // Save cart to Firestore
   const saveToDB = async (updatedCart) => {
     if (!currentUser) return;
 
@@ -39,6 +41,7 @@ export const CartProvider = ({ children }) => {
     await setDoc(ref, { cart: updatedCart }, { merge: true });
   };
 
+  // Add Item
   const addToCart = (item) => {
     setCart((prev) => {
       const exists = prev.find((i) => i.id === item.id);
@@ -50,31 +53,45 @@ export const CartProvider = ({ children }) => {
         );
       } else {
         updatedCart = [...prev, { ...item, qty: 1 }];
+        toast.success("Added to cart");
       }
 
       saveToDB(updatedCart);
+
+      // 🔥 SUCCESS POPUP
+      toast.success("Item added to cart!");
+
       return updatedCart;
     });
   };
 
+  // Remove item
   const removeFromCart = (id) => {
     setCart((prev) => {
       const updatedCart = prev.filter((item) => item.id !== id);
       saveToDB(updatedCart);
+
+      toast.info("Item removed!");
+
       return updatedCart;
     });
   };
 
+  // Increase Qty
   const increaseQty = (id) => {
     setCart((prev) => {
       const updatedCart = prev.map((item) =>
         item.id === id ? { ...item, qty: item.qty + 1 } : item
       );
       saveToDB(updatedCart);
+
+      toast.success("Quantity increased");
+
       return updatedCart;
     });
   };
 
+  // Decrease Qty
   const decreaseQty = (id) => {
     setCart((prev) => {
       const updatedCart = prev.map((item) =>
@@ -83,6 +100,9 @@ export const CartProvider = ({ children }) => {
           : item
       );
       saveToDB(updatedCart);
+
+      toast.warning("Quantity decreased");
+
       return updatedCart;
     });
   };

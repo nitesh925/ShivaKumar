@@ -1,7 +1,8 @@
 // src/authContext.jsx
-import React, { createContext, useContext, useEffect, useState } from "react";
+import React, { createContext, useContext, useEffect, useRef, useState } from "react";
 import { auth } from "./firebase/firebaseConfig";
 import { onAuthStateChanged, signOut } from "firebase/auth";
+import { toast } from "react-toastify";
 
 const AuthContext = createContext();
 
@@ -9,8 +10,29 @@ export const AuthProvider = ({ children }) => {
   const [currentUser, setCurrentUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
+  const prevUserRef = useRef(null);
+  const skipLoginToast = useRef(false); // <-- IMPORTANT
+
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
+    const unsubscribe = onAuthStateChanged(auth, async (user) => {
+      const previousUser = prevUserRef.current;
+
+      // Skip toast for new unverified registration
+      if (skipLoginToast.current && user && !user.emailVerified) {
+        skipLoginToast.current = false;
+      } else {
+        // Normal login toast (only for verified users)
+        if (!previousUser && user && user.emailVerified) {
+          toast.success("Logged in successfully!");
+        }
+      }
+
+      // Logout toast
+      if (previousUser && !user) {
+        toast.info("Logged out!");
+      }
+
+      prevUserRef.current = user;
       setCurrentUser(user);
       setLoading(false);
     });
@@ -19,13 +41,15 @@ export const AuthProvider = ({ children }) => {
   }, []);
 
   const logout = async () => {
-    await signOut(auth);
+    try {
+      await signOut(auth);
+    } catch {
+      toast.error("Logout failed!");
+    }
   };
 
-  const value = { currentUser, logout };
-
   return (
-    <AuthContext.Provider value={value}>
+    <AuthContext.Provider value={{ currentUser, logout, skipLoginToast }}>
       {!loading && children}
     </AuthContext.Provider>
   );

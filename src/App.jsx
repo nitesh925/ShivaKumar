@@ -18,50 +18,80 @@ import Contact from "./pages/Contact";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import ServiceDetail from "./pages/ServiceDetail";
-import EntryPage from "./pages/Entry";
 import PhonePage from "./pages/PhonePage";
 import Cart from "./pages/Cart";
 import AlmondsPage from "./pages/AlmondsPage";
+import CategoriesPage from "./pages/CategoriesPage";
+import AllProductsPage from "./pages/AllProductsPage";
+import AddProductPage from "./pages/AddProductPage";
 
 import ScrollToTop from "./components/ScrollToTop";
-import CategoriesPage from "./pages/CategoriesPage";
 
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
+// ----------------------------
+// LAYOUT WRAPPER
+// ----------------------------
+const Layout = ({ children }) => {
+  return (
+    <>
+      <Navbar />
+      {children}
+      <Footer />
+      <BottomNav />
+    </>
+  );
+};
 
 const App = () => {
   return (
     <>
       <ScrollToTop />
 
-      <div className="app-container">
-        <CartProvider>
-          <AuthProvider>
+      
 
-            <Navbar />
+          <Routes>
 
-            <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/home" element={<Home />} />
-              <Route path="/booking" element={<PhonePage />} />
-              <Route path="/about" element={<About />} />
-              <Route path="/profile" element={<Profile />} />
-              <Route path="/matches" element={<Matches />} />
-              <Route path="/contact" element={<Contact />} />
-              <Route path="/services/:id" element={<ServiceDetail />} />
-              <Route path="/login" element={<Login />} />
-              <Route path="/register" element={<Register />} />
-              <Route path="/cart" element={<Cart />} />
+            {/* -------- PUBLIC ROUTES WITHOUT NAVBAR -------- */}
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
 
-              <Route path="/category/almonds" element={<AlmondsPage />} />
-              <Route path="/categories" element={<CategoriesPage />} />
-            </Routes>
+            {/* -------- MAIN WEBSITE ROUTES WITH LAYOUT -------- */}
+            <Route
+              path="/*"
+              element={
+                <Layout>
+                  <Routes>
 
-            <Footer />
-            <BottomNav />
+                    <Route path="/" element={<Home />} />
+                    <Route path="/home" element={<Home />} />
+                    <Route path="/about" element={<About />} />
+                    <Route path="/profile" element={<Profile />} />
+                    <Route path="/matches" element={<Matches />} />
+                    <Route path="/contact" element={<Contact />} />
+                    <Route path="/booking" element={<PhonePage />} />
+                    <Route path="/services/:id" element={<ServiceDetail />} />
+                    <Route path="/cart" element={<Cart />} />
 
-          </AuthProvider>
-        </CartProvider>
-      </div>
+                    {/* PRODUCT ROUTES */}
+                    <Route path="/category/almonds" element={<AlmondsPage />} />
+                    <Route path="/categories" element={<CategoriesPage />} />
+                    <Route path="/allproducts" element={<AllProductsPage />} />
+
+                    {/* ADMIN */}
+                    <Route path="/add-product" element={<AddProductPage />} />
+
+                  </Routes>
+                </Layout>
+              }
+            />
+
+          </Routes>
+
+        
+
+      <ToastContainer position="top-center" autoClose={2000} />
     </>
   );
 };

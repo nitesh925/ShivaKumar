@@ -125,7 +125,29 @@
   cursor: pointer;
   background: linear-gradient(90deg, #ad5617, #883a02);
 }
+.divider-text {
+  font-size: 14px;
+  color: #444;
+}
 
+/* Social Icons */
+.social-row {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+.social-circle {
+  width: 55px;
+  height: 55px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 22px;
+  color: #fff;
+  cursor: pointer;
+}
 /* Login text */
 .login-text {
   text-align: center;

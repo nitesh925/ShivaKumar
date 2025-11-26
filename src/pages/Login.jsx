@@ -3,7 +3,12 @@ import "../styles/Login.css";
 import { FaEnvelope, FaLock, FaFacebookF, FaGoogle } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
 import { auth } from "../firebase/firebaseConfig";
-import { signInWithEmailAndPassword, sendPasswordResetEmail } from "firebase/auth";
+import {
+  signInWithEmailAndPassword,
+  sendPasswordResetEmail,
+  GoogleAuthProvider,
+  signInWithPopup,
+} from "firebase/auth";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -13,6 +18,9 @@ const Login = () => {
   const [errorMsg, setErrorMsg] = useState("");
   const [infoMsg, setInfoMsg] = useState("");
 
+  // --------------------------------------------------------
+  // EMAIL + PASSWORD LOGIN
+  // --------------------------------------------------------
   const handleLogin = async (e) => {
     e.preventDefault();
     setErrorMsg("");
@@ -26,15 +34,12 @@ const Login = () => {
     try {
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
 
-      // Check if email is verified
       if (!userCredential.user.emailVerified) {
         setErrorMsg("Please verify your email before logging in.");
         return;
       }
 
-      alert("Login Successful!");
       navigate("/home");
-
     } catch (error) {
       console.log(error);
       if (error.code === "auth/user-not-found") {
@@ -47,8 +52,9 @@ const Login = () => {
     }
   };
 
-
-  // ✅ Reset Password Function
+  // --------------------------------------------------------
+  // PASSWORD RESET
+  // --------------------------------------------------------
   const handlePasswordReset = async () => {
     setErrorMsg("");
     setInfoMsg("");
@@ -67,6 +73,30 @@ const Login = () => {
     }
   };
 
+  // --------------------------------------------------------
+  // GOOGLE LOGIN
+  // --------------------------------------------------------
+  const handleGoogleLogin = async () => {
+    setErrorMsg("");
+    const provider = new GoogleAuthProvider();
+
+    try {
+      const result = await signInWithPopup(auth, provider);
+
+      const user = result.user;
+
+      // Google accounts are already verified
+      if (!user.emailVerified && user.providerData[0].providerId === "password") {
+        setErrorMsg("Please verify your email first.");
+        return;
+      }
+
+      navigate("/home");
+    } catch (error) {
+      console.log(error);
+      setErrorMsg("Google login failed. Try again.");
+    }
+  };
 
   return (
     <div className="login-wrapper">
@@ -77,7 +107,6 @@ const Login = () => {
           {errorMsg && <p className="error-message">{errorMsg}</p>}
           {infoMsg && <p className="info-message">{infoMsg}</p>}
 
-          {/* Email */}
           <div className="input-box">
             <FaEnvelope className="icon" />
             <input 
@@ -88,7 +117,6 @@ const Login = () => {
             />
           </div>
 
-          {/* Password */}
           <div className="input-box">
             <FaLock className="icon" />
             <input 
@@ -99,7 +127,6 @@ const Login = () => {
             />
           </div>
 
-          {/* Forgot Password */}
           <p className="forgot" onClick={handlePasswordReset} style={{cursor: "pointer"}}>
             Forgot Password?
           </p>
@@ -108,10 +135,15 @@ const Login = () => {
             <span className="divider-text">Login With</span>
           </div>
 
-          {/* Social Icons */}
           <div className="social-row">
-            <div className="social-circle fb"><FaFacebookF /></div>
-            <div className="social-circle google"><FaGoogle /></div>
+            <div className="social-circle fb">
+              <FaFacebookF />
+            </div>
+
+            {/* GOOGLE LOGIN BUTTON */}
+            <div className="social-circle google" onClick={handleGoogleLogin}>
+              <FaGoogle />
+            </div>
           </div>
 
           <button className="login-btn">Login</button>

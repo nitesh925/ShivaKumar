@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import almondsData from "../data/almonds.json";
 import "../styles/ProductCard.css";
+import { toast } from "react-toastify";
 
 const AlmondsPage = () => {
   const [products, setProducts] = useState([]);
@@ -9,6 +10,15 @@ const AlmondsPage = () => {
     setProducts(almondsData);
   }, []);
 
+  const handleAddToCart = (item) => {
+    // Add cart logic later if needed
+
+    toast.success(`${item.title} added to cart!`, {
+      position: "top-center",
+      autoClose: 1200,
+    });
+  };
+
   return (
     <div className="category-page">
       <h2 className="category-title">Almonds</h2>
@@ -16,8 +26,7 @@ const AlmondsPage = () => {
       <div className="product-grid">
         {products.map((item) => (
           <div className="product-card" key={item.id}>
-            const per100 = ((item.price / item.weight) * 100).toFixed(1);
-
+            
             {item.badge && <div className="badge">{item.badge}</div>}
             {item.discount && <div className="discount">{item.discount}</div>}
 
@@ -30,17 +39,21 @@ const AlmondsPage = () => {
 
               <p className="title">{item.title}</p>
 
-              {/* PRICE FIXED */}
               <p className="price-row">
-  MRP: <span className="mrp">{item.mrp}</span>
-  <span className="price">{item.price}</span>
-</p>
+                MRP: <span className="mrp">{item.mrp}</span>
+                <span className="price">{item.price}</span>
+              </p>
 
               <p className="per100">({item.per100})</p>
 
-              <button className="add-btn">Add To Cart </button>
-            </div>
+              <button 
+                className="add-btn"
+                onClick={() => handleAddToCart(item)}
+              >
+                Add To Cart
+              </button>
 
+            </div>
           </div>
         ))}
       </div>
