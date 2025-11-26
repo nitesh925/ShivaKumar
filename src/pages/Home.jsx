@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import '../styles/Home.css';
 import { Link } from 'react-router-dom';
-
+import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 const skills = [
   { id: 'Almonds', name: 'Almonds', image: '/images/Almonds.png' },
   { id: 'Cashews', name: 'Cashews', image: '/images/Cashew.png' },
@@ -14,12 +14,14 @@ const skills = [
   { id: 'Blueberry', name: 'Blueberry', image: '/images/Blueberry.png' },
   { id: 'Cranberry', name: 'Cranberry', image: '/images/Cranberry.png' },
   { id: 'Prunes', name: 'Prunes', image: '/images/Prunes.png' },
-  
 ];
 
 const Home = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [filteredSkills, setFilteredSkills] = useState([]);
+
+  // Carousel page state
+  const [page, setPage] = useState(0);
 
   const renderCards = () => {
     const skillsToRender = searchQuery ? filteredSkills : skills;
@@ -35,24 +37,7 @@ const Home = () => {
   return (
     <>
       <div className="homepage">
-
-        {/* VIDEO BANNER */}
-        <div className="video-container">
-          <video autoPlay loop muted playsInline className="home-video">
-            <source src="/videos/videocarousel.mp4" type="video/mp4" />
-            Your browser does not support the video tag.
-          </video>
-        </div>
-
-        {/* HERO SECTION */}
-        <h1 className="hero-text">Effortless Event Planning, All in One Place!</h1>
-        <p className="hero-subtext">
-          Book venues, catering, décor, photography, and more with ease.
-          From weddings to corporate events, we make every moment unforgettable.
-          Start planning today!
-        </p>
-
-        {/* CARDS SECTION */}
+{/* SKILL CARDS */}
         <div className="home-container">
 
           {searchQuery && filteredSkills.length > 0 && (
@@ -71,41 +56,70 @@ const Home = () => {
             {renderCards()}
           </div>
         </div>
-
-        {/* TEXT + IMAGE SECTIONS */}
-        <h1 className="home-heading2">Turn your special moments into timeless memories</h1>
-
-        <div className="image-text-container">
-          <img src="/images/wed1.jpg" alt="Pre-Wedding Events" className="image" />
-          <div className="text-content">
-            <h3>Pre-Wedding Events</h3>
-            <p>
-              Celebrate love with unforgettable pre-wedding events!
-              From Engagement to Mehendi, Sangeet, and Haldi, every moment crafted beautifully.
-            </p>
-          </div>
+        {/* VIDEO BANNER */}
+        <div className="video-container">
+          <video autoPlay loop muted playsInline className="home-video">
+            <source src="/videos/videocarousel.mp4" type="video/mp4" />
+          </video>
         </div>
 
-        <div className="image-text-container">
-          <img src="/images/wed2.jpg" alt="Wedding Anniversary" className="image" />
-          <div className="text-content">
-            <h3>Wedding Anniversary</h3>
-            <p>
-              Secure your special day with us! Book in advance for seamless planning and availability. 🎉
-            </p>
-          </div>
-        </div>
+        {/* HERO SECTION */}
+        <h1 className="hero-text">Eat better. Live better.</h1>
+        <p className="hero-subtext">
+          Fuel your day with pure, premium, and consciously sourced goodness.
+        </p>
 
-        <div className="image-text-container">
-          <img src="/images/wed3.jpg" alt="Haldi Ceremony" className="image" />
-          <div className="text-content">
-            <h3>Haldi Ceremony</h3>
-            <p>
-              Celebrate the joy of your Haldi with vibrant colors, laughter, and traditions. 💛🎊
-            </p>
-          </div>
-        </div>
 
+        
+
+        {/* HEALTH CATEGORY CAROUSEL */}
+        <div className="health-carousel">
+
+          
+
+            {/* PAGE 1 */}
+            <div className="health-page">
+              <div className="health-card">
+                <div className="circle green">
+                  <img src="/images/fitness.png" alt="Fitness" />
+                </div>
+                <h3>Fitness</h3>
+                <p>Energize your workouts with clean, nutrient-dense dry fruits.</p>
+              </div>
+
+              <div className="health-card">
+                <div className="circle beige">
+                  <img src="/images/maternity.png" alt="Maternity" />
+                </div>
+                <h3>Maternity</h3>
+                <p>Support healthy motherhood with iron-rich, nourishing snacks.</p>
+              </div>
+            </div>
+
+            {/* PAGE 2 */}
+            <div className="health-page">
+              <div className="health-card">
+                <div className="circle lightgreen">
+                  <img src="/images/kids.png" alt="Kids" />
+                </div>
+                <h3>Kids</h3>
+                <p>Give your kids natural energy boosters packed with goodness.</p>
+              </div>
+
+              <div className="health-card">
+                <div className="circle pink">
+                  <img src="/images/eldercare.png" alt="Elder Care" />
+                </div>
+                <h3>Elder Care</h3>
+                <p>Strengthen immunity and wellness with premium dry fruits.</p>
+              </div>
+            </div>
+          
+          <br></br>
+         
+        </div>
+        {/* IMAGE + TEXT SECTIONS */}
+        
       </div>
     </>
   );

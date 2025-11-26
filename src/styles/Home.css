@@ -11,10 +11,10 @@ body{
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    margin: 3%;
-    padding: 3%;
+    margin: 03%;
+    padding: 0%;
     border-radius: 15px;
-    background-color:#ad5617;
+    background-color:#ffffff;
     text-align: center;
 }
 /* Main container for the Home page */
@@ -85,7 +85,7 @@ body{
 .card {
     
     min-width: 10px; /* Reduce card width */
-    height: 140px; /* Reduce card height */
+    height: 90px; /* Reduce card height */
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -102,13 +102,13 @@ body{
 
 .card img {
     width: 100%; /* Increase image width */
-    height: 95px; /* Increase image height */
+    height: 55px; /* Increase image height */
     object-fit: contain;
     margin-bottom: 5px; /* Reduce space below image */
 }
 
 .card h3 {
-    font-size: 1rem; /* Reduce text size */
+    font-size: 0.7rem; /* Reduce text size */
     color: #333;
     margin: 0;
 }
@@ -172,9 +172,11 @@ body{
   .home-video {
     width: 100%;
     max-width: 1600px; /* You can adjust this max-width as needed */
-    border-radius: 0px;
+    border-radius: 40px;
     aspect-ratio: 16 / 9; /* Maintains aspect ratio */
     object-fit: cover;
+    padding-left: 20px;
+    padding-right: 20px;
   }
   
   /* Optional: Remove extra width on small screens */
@@ -203,6 +205,125 @@ body{
     max-width: 800px;
     margin: 10px auto;
 }
+/* CAROUSEL BOX */
+.health-carousel {
+  margin: 0px 0;
+  width: 100%;
+  text-align: center;
+}
+
+/* WRAPPER HOLDS 2 PAGES SIDE-BY-SIDE */
+.health-wrapper {
+  display: flex;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  gap: 20px;
+}
+
+.health-wrapper::-webkit-scrollbar {
+  display: none;
+}
+.scroll-indicator {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  margin-top: 15px;
+}
+
+.dot {
+  width: 10px;
+  height: 10px;
+  background-color: #d0d0d0;
+  border-radius: 50%;
+  transition: 0.3s ease;
+}
+
+.dot.active {
+  width: 25px;
+  border-radius: 10px;
+  background-color: #000;
+}
+.dots {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.dots span {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #ccc;
+  transition: 0.3s ease;
+}
+
+.active-dot {
+  background: #333;
+  transform: scale(1.2);
+}
+
+/* EACH PAGE HOLDS 2 CARDS */
+.health-page {
+  display: flex;
+  justify-content: space-around;
+  min-width: 100%;
+  scroll-snap-align: center;
+}
+
+/* INDIVIDUAL CARD */
+.health-card {
+  width: 45%;
+  text-align: center;
+}
+
+.health-card h3 {
+  font-size: 20px;
+  margin: 10px 0;
+}
+
+.health-card p {
+  font-size: 14px;
+  color: #666;
+}
+
+/* ROUND CIRCLE ICON BACKGROUND */
+.circle {
+  width: 130px;
+  height: 130px;
+  border-radius: 50%;
+  margin: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.circle img {
+  width: 100px;
+  height: 100px;
+}
+
+/* COLORS */
+
+/* PAGE INDICATOR */
+.indicator {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+  margin-top: 15px;
+}
+
+.indicator span {
+  font-size: 28px;
+  cursor: pointer;
+}
+
+.indicator p {
+  font-size: 18px;
+}
+
 .image-grid-container {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
