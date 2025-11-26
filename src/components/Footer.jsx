@@ -72,7 +72,7 @@ const Footer = () => {
       </div>
 
       <p className="footer-bottom">
-        ©2023 Zaya Dryfruits By Beacon Coders. All Rights Reserved.
+        ©2025 NiteshDevarsetty. All Rights Reserved.
       </p>
     </footer>
   );

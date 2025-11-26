@@ -67,15 +67,15 @@ const ContactUs = () => {
             Shiva Kumar General Store<br />
             Near Bus Stop, Kasibugga, Andhra Pradesh 532222
           </p>
-          <a
-    className="google-map-link"
-    href="https://maps.app.goo.gl/KT4mzYVx2xux7HGVA"
-    target="_blank"
-    rel="noopener noreferrer"
-  >
-    <p className="info"></p>
-    View on Google Maps
-  </a>
+<a
+  className="google-map-link"
+  href="https://maps.app.goo.gl/KT4mzYVx2xux7HGVA"
+  target="_blank"
+  rel="noopener noreferrer"
+>
+  View on Google Maps
+</a>
+
         </div>
         
 
