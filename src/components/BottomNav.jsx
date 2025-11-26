@@ -24,9 +24,9 @@ const BottomNav = () => {
         <span>Home</span>
       </Link>
 
-      <Link to="/about" className={location.pathname === "/about" ? "active" : ""}>
+      <Link to="/categories" className={location.pathname === "/categories" ? "active" : ""}>
         <InfoOutlinedIcon />
-        <span>About Us</span>
+        <span>Category</span>
       </Link>
 
       <Link to="/cart" className={location.pathname === "/cart" ? "active" : ""}>

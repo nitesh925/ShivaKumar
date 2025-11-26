@@ -53,7 +53,7 @@ const ContactUs = () => {
 
         <div className="detail-box">
           <p className="title">📞 Reach us on call/WhatsApp</p>
-          <p className="info">+91-9966394544</p>
+          <p className="info">+91 9966394544</p>
         </div>
 
         <div className="detail-box">

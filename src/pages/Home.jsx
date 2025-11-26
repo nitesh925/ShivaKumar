@@ -11,11 +11,10 @@ const skills = [
   { id: 'Pistachios', name: 'Pistachios', image: '/images/Pistachios.png' },
   { id: 'Apricots', name: 'Apricots', image: '/images/Apricots.png' },
   { id: 'Figs', name: 'Figs', image: '/images/Figs.png' },
-  { id: 'branding', name: 'Branding', image: '/images/branding.png' },
-  { id: 'stage', name: 'Decoration', image: '/images/stage.png' },
-  { id: 'house', name: 'Inauguration', image: '/images/house.png' },
-  { id: 'flower', name: 'Florals', image: '/images/flower.png' },
-  { id: 'proposal', name: 'Proposal', image: '/images/proposal.png' },
+  { id: 'Blueberry', name: 'Blueberry', image: '/images/Blueberry.png' },
+  { id: 'Cranberry', name: 'Cranberry', image: '/images/Cranberry.png' },
+  { id: 'Prunes', name: 'Prunes', image: '/images/Prunes.png' },
+  
 ];
 
 const Home = () => {

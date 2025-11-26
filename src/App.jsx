@@ -23,37 +23,46 @@ import PhonePage from "./pages/PhonePage";
 import Cart from "./pages/Cart";
 import AlmondsPage from "./pages/AlmondsPage";
 
+import ScrollToTop from "./components/ScrollToTop";
+import CategoriesPage from "./pages/CategoriesPage";
+
+
+
 const App = () => {
   return (
-    <div className="app-container">
-      {/* ⭐ CartProvider ALWAYS outside so cart works everywhere */}
-      <CartProvider>
-        {/* ⭐ AuthProvider inside */}
-        <AuthProvider>
-          <Navbar />
+    <>
+      <ScrollToTop />
 
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/home" element={<Home />} />
-            <Route path="/booking" element={<PhonePage />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/profile" element={<Profile />} />
-            <Route path="/matches" element={<Matches />} />
-            <Route path="/contact" element={<Contact />} />
-            <Route path="/services/:id" element={<ServiceDetail />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/register" element={<Register />} />
-            <Route path="/cart" element={<Cart />} />
+      <div className="app-container">
+        <CartProvider>
+          <AuthProvider>
 
-            {/* Categories */}
-            <Route path="/category/almonds" element={<AlmondsPage />} />
-          </Routes>
+            <Navbar />
 
-          <Footer />
-          <BottomNav />
-        </AuthProvider>
-      </CartProvider>
-    </div>
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/home" element={<Home />} />
+              <Route path="/booking" element={<PhonePage />} />
+              <Route path="/about" element={<About />} />
+              <Route path="/profile" element={<Profile />} />
+              <Route path="/matches" element={<Matches />} />
+              <Route path="/contact" element={<Contact />} />
+              <Route path="/services/:id" element={<ServiceDetail />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/register" element={<Register />} />
+              <Route path="/cart" element={<Cart />} />
+
+              <Route path="/category/almonds" element={<AlmondsPage />} />
+              <Route path="/categories" element={<CategoriesPage />} />
+            </Routes>
+
+            <Footer />
+            <BottomNav />
+
+          </AuthProvider>
+        </CartProvider>
+      </div>
+    </>
   );
 };
 

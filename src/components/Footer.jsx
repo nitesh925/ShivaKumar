@@ -1,53 +1,79 @@
-import React from 'react';
-import '../styles/Footer.css'; // Link to a separate CSS file for styles
-import { FaInstagram, FaFacebookF, FaTwitter } from 'react-icons/fa';
+import React from "react";
+import "../styles/Footer.css";
+import { Link } from "react-router-dom";
 
 const Footer = () => {
   return (
     <footer className="footer">
       <div className="footer-container">
+
+        {/* CONTACT */}
         <div className="footer-section">
-          {/* You can add content here if needed */}
+          <h3>Contact Us</h3>
+          <p>Shiva Kumar General Store<br />
+            Near Bus Stop, Kasibugga, Andhra Pradesh 532222</p>
+
+          <p className="footer-icon">
+            <span>📨</span> srinusunkari544@gmail.com
+          </p>
+
+          <p className="footer-icon">
+            <span>📞</span> +(91) 99663 94544
+          </p>
         </div>
+
+        {/* USEFUL LINKS */}
         <div className="footer-section">
-          <h4>Follow Us</h4>
-          <ul className="social-links">
-            <li>
-              <a 
-                href="https://www.instagram.com/srilaxmiganapatievents" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                aria-label="Follow us on Instagram"
-              >
-                <FaInstagram className="social-icon" /> Instagram
-              </a>
-            </li>
-            <li>
-              <a 
-                href="https://facebook.com/srilaxmiganapatievents" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                aria-label="Follow us on Facebook"
-              >
-                <FaFacebookF className="social-icon" /> Facebook
-              </a>
-            </li>
-            <li>
-              <a 
-                href="https://twitter.com/srilaxmiganapatievents" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                aria-label="Follow us on Twitter"
-              >
-                <FaTwitter className="social-icon" /> Twitter
-              </a>
-            </li>
+  <h3>Useful Links</h3>
+  <ul>
+    <li>
+      <Link to="/">Home</Link>
+    </li>
+    <li>
+      <Link to="/about">About us</Link>
+    </li>
+    <li>
+      <Link to="/contact">Contact us</Link>
+    </li>
+    
+    <li>
+      <Link to="/terms">Terms & Condition</Link>
+    </li>
+    <li>
+      <Link to="/privacy">Privacy Policy</Link>
+    </li>
+  </ul>
+</div>
+
+
+        {/* SOCIAL LINKS */}
+        <div className="footer-section">
+          <h3>Follow Us Now</h3>
+          <ul>
+            <li>📘 Facebook</li>
+            <li>🐦 Twitter</li>
+            <li>📸 Instagram</li>
+            <li>📍 Pinterest</li>
+            <li>💼 Linkedin</li>
           </ul>
         </div>
-        <div className="footer-bottom">
-          <p>&copy; Nitesh Devarsetty. All Rights Reserved.</p>
+
+        {/* RATE LIST */}
+        <div className="footer-section">
+          <h3>For Complete Menu</h3>
+          <p>Click To Download Rate List</p>
+
+          <div className="app-buttons">
+            <img src="/google.png" alt="Google Play" />
+            <img src="/apple.png" alt="App Store" />
+          </div>
         </div>
+
       </div>
+
+      <p className="footer-bottom">
+        ©2023 Zaya Dryfruits By Beacon Coders. All Rights Reserved.
+      </p>
     </footer>
   );
 };
