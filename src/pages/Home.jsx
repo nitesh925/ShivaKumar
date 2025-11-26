@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import '../styles/Home.css';
 import { Link } from 'react-router-dom';
 import { useNavigate } from "react-router-dom";
+import bannerVideo from "../videos/banner.mp4"; 
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 const skills = [
   { id: 'Almonds', name: 'Almonds', image: '/images/Almonds.png' },
@@ -151,11 +152,12 @@ const goToCategories = () => {
         loop
         playsInline
       >
-        <source src="/videos/banner.mp4" type="video/mp4" />
+        <source src={bannerVideo} type="video/mp4" />
       </video>
 
       <div className="video-content">
         <p className="intro-text">Introducing</p>
+
         <h1 className="title-text">
           Pure Quality, Perfectly <br /> Yours !
         </h1>
