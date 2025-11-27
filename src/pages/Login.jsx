@@ -9,8 +9,9 @@ import {
   GoogleAuthProvider,
   signInWithPopup,
 } from "firebase/auth";
+import { toast } from "react-toastify";
 
-const ADMIN_UID = "eliXhzH33DUQfj9bz1hwmHDRzKP2"; // <-- your admin UID
+const ADMIN_UID = "eliXhzH33DUQfj9bz1hwmHDRzKP2"; // admin UID
 
 const Login = () => {
   const navigate = useNavigate();
@@ -41,7 +42,9 @@ const Login = () => {
         return;
       }
 
-      navigate("/home");
+      toast.success("Logged in successfully!");
+      navigate("/home", { replace: true });
+
     } catch (error) {
       console.log(error);
       if (error.code === "auth/user-not-found") {
@@ -67,17 +70,15 @@ const Login = () => {
 
     try {
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
-
       const user = userCredential.user;
 
-      // Check if this is the admin
       if (user.uid !== ADMIN_UID) {
         setErrorMsg("Not an admin account.");
         return;
       }
 
-      // Admin success → redirect
-      navigate("/add-product");
+      toast.success("Admin logged in!");
+      navigate("/add-product", { replace: true });
 
     } catch (error) {
       console.log(error);
@@ -100,6 +101,7 @@ const Login = () => {
     try {
       await sendPasswordResetEmail(auth, email);
       setInfoMsg("Password reset email sent!");
+      toast.info("Password reset sent!");
     } catch (error) {
       console.log(error);
       setErrorMsg("Failed to send reset email.");
@@ -114,8 +116,10 @@ const Login = () => {
     const provider = new GoogleAuthProvider();
 
     try {
-      const result = await signInWithPopup(auth, provider);
-      navigate("/home");
+      await signInWithPopup(auth, provider);
+      toast.success("Logged in with Google!");
+      navigate("/home", { replace: true });
+
     } catch (error) {
       console.log(error);
       setErrorMsg("Google login failed. Try again.");
@@ -157,7 +161,7 @@ const Login = () => {
 
           <button className="login-btn">Login</button>
 
-          {/* NEW ADMIN LOGIN BUTTON */}
+          {/* ADMIN LOGIN BUTTON */}
           <button
             type="button"
             className="login-btn admin-btn"

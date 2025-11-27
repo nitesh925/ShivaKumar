@@ -1,10 +1,9 @@
-import React, { useMemo } from "react";
+import React, { useMemo, useEffect } from "react";
 import { useCart } from "../cartContext";
 import "../styles/Cart.css";
 import { toast } from "react-toastify";
 import { useAuth } from "../authContext";
 import { useNavigate } from "react-router-dom";
-import { useEffect } from "react";
 
 export default function Cart() {
   const { cart, increaseQty, decreaseQty, removeFromCart } = useCart();
@@ -18,6 +17,13 @@ export default function Cart() {
     script.async = true;
     document.body.appendChild(script);
   }, []);
+
+  // ---------------- IMAGE FIX ----------------
+  const getImage = (img) => {
+  if (img.startsWith("http://") || img.startsWith("https://")) return img;
+  if (img.startsWith("/")) return img;
+  return `/images/${img}`;
+};
 
   // ---------------- CALCULATIONS ----------------
   const { mrpTotal, discountTotal, subTotal } = useMemo(() => {
@@ -39,7 +45,7 @@ export default function Cart() {
     };
   }, [cart]);
 
-  const totalAmount = subTotal; // Final payable amount
+  const totalAmount = subTotal;
 
   // ---------------- RAZORPAY PAYMENT ----------------
   const handlePayment = () => {
@@ -55,8 +61,8 @@ export default function Cart() {
     }
 
     const options = {
-      key: "rzp_test_RkhFp0n5yUCIfH", // 🔴 Replace with your Razorpay Key
-      amount: totalAmount * 100, // convert to paisa
+      key: "rzp_test_RkhFp0n5yUCIfH",
+      amount: totalAmount * 100,
       currency: "INR",
       name: "Siva Kumar General Stores",
       description: "Order Payment",
@@ -101,24 +107,50 @@ export default function Cart() {
 
     const whatsappNumber = "919040555925";
 
-    window.open(`https://wa.me/${whatsappNumber}?text=${finalMessage}`, "_blank");
+    window.open(
+      `https://wa.me/${whatsappNumber}?text=${finalMessage}`,
+      "_blank"
+    );
   };
 
   return (
     <div className="cart-drawer">
-      <h2 className="cart-title">Keep Nourishing Your Cart 🛒</h2>
+      
 
       {cart.length === 0 ? (
-        <div className="empty-box">
-          <img src="/empty-cart.png" className="empty-cart-img" />
-          <h3>I'm Empty!</h3>
-          <p>I've got room for anything.</p>
-        </div>
-      ) : (
+  <div className="empty-cart-wrapper">
+
+    {/* Illustration */}
+    <img
+      src="images/emptycart.png"
+      alt="Empty Cart"
+      className="empty-cart-image"
+    />
+
+    {/* 0 Items */}
+    
+    {/* Title */}
+    <h2 className="empty-title">I'm Empty!</h2>
+
+    {/* Subtext */}
+    <p className="empty-subtext">Your cart is feeling lonely.</p>
+
+    {/* Go Shopping Button */}
+    <button
+      className="go-shopping-btn"
+      onClick={() => navigate("/")}
+    >
+      Go Shopping!
+    </button>
+
+  </div>
+) : (
+
         <div className="cart-items">
+          <h2 className="cart-title">Keep Nourishing Your Cart 🛒</h2>
           {cart.map((item) => (
             <div className="cart-item" key={item.id}>
-              <img src={`/images/${item.image}`} className="cart-img" />
+              <img src={getImage(item.image)} className="cart-img" />
 
               <div className="cart-info">
                 <h4>{item.title}</h4>

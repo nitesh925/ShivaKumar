@@ -24,17 +24,26 @@
   background: #f8f8f8;
   border-radius: 12px;
   position: relative;
+  align-items: flex-start;
 }
 
+/* IMAGE */
 .cart-img {
   width: 70px;
   height: 70px;
   object-fit: contain;
 }
 
+/* INFO */
+.cart-info {
+  flex: 1;
+  padding-right: 35px;    /* 👈 Added space so text never touches the X icon */
+}
+
 .cart-info h4 {
   font-size: 14px;
   margin-bottom: 4px;
+  word-break: break-word; /* 👈 Avoid overflow */
 }
 
 .price-row {
@@ -54,6 +63,7 @@
   font-weight: 600;
 }
 
+/* QTY */
 .qty-box {
   display: flex;
   align-items: center;
@@ -70,20 +80,19 @@
   cursor: pointer;
 }
 
+/* REMOVE BUTTON */
 .remove-btn {
   position: absolute;
   top: 8px;
   right: 10px;
   background: none;
   border: none;
-  font-size: 18px;
+  font-size: 20px;
   cursor: pointer;
+  z-index: 10;
 }
 
-/* -----------------------------------------
-   ORDER SUMMARY BOX (NEW)
---------------------------------------------*/
-
+/* ORDER SUMMARY */
 .order-summary-box {
   border: 2px solid #b54b4b;
   border-radius: 12px;
@@ -123,10 +132,7 @@
   margin: 3px 0;
 }
 
-/* -----------------------------------------
-   CHECKOUT BUTTON
---------------------------------------------*/
-
+/* Checkout Button */
 .checkout-bar {
   margin-top: 20px;
   padding: 10px;
@@ -143,6 +149,8 @@
   font-size: 16px;
   font-weight: 600;
 }
+
+/* Manual order */
 .manual-order {
   text-align: center;
   margin-top: 10px;
@@ -153,4 +161,51 @@
   font-size: 15px;
   color: #444;
   text-decoration: underline;
+}
+
+/* Empty cart */
+.empty-cart-wrapper {
+  text-align: center;
+  padding: 30px 20px;
+}
+
+.empty-cart-image {
+  width: 180px;
+  margin: auto;
+  display: block;
+}
+
+.empty-count {
+  font-size: 16px;
+  margin-top: 10px;
+  color: #5e1d1d;
+}
+
+.empty-count .big {
+  font-size: 26px;
+  font-weight: bold;
+}
+
+.empty-title {
+  font-size: 24px;
+  font-weight: bold;
+  color: #5e1d1d;
+  margin-top: 10px;
+}
+
+.empty-subtext {
+  font-size: 16px;
+  color: #333;
+  margin-top: 5px;
+}
+
+.go-shopping-btn {
+  margin-top: 18px;
+  padding: 12px 24px;
+  background: #7a1a1a;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-size: 16px;
+  cursor: pointer;
 }

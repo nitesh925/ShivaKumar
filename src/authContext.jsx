@@ -1,5 +1,5 @@
 // src/authContext.jsx
-import React, { createContext, useContext, useEffect, useRef, useState } from "react";
+import React, { createContext, useContext, useEffect, useState } from "react";
 import { auth } from "./firebase/firebaseConfig";
 import { onAuthStateChanged, signOut } from "firebase/auth";
 import { toast } from "react-toastify";
@@ -11,43 +11,29 @@ export const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
   const [isAdmin, setIsAdmin] = useState(false);
 
-  const prevUserRef = useRef(null);
-  const skipLoginToast = useRef(false);
-
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
-      const previousUser = prevUserRef.current;
+      setCurrentUser(user);
 
       if (user) {
-        // 👑 CHECK ADMIN CLAIM
+        // check admin role
         const token = await user.getIdTokenResult(true);
         setIsAdmin(token.claims.admin === true);
       } else {
         setIsAdmin(false);
       }
 
-      // 🔔 LOGIN TOAST
-      if (!previousUser && user && user.emailVerified) {
-        toast.success("Logged in successfully!");
-      }
-
-      // 🔔 LOGOUT TOAST
-      if (previousUser && !user) {
-        toast.info("Logged out!");
-      }
-
-      prevUserRef.current = user;
-      setCurrentUser(user);
       setLoading(false);
     });
 
     return () => unsubscribe();
   }, []);
 
-  // 🔐 LOGOUT FUNCTION
+  // LOGOUT
   const logout = async () => {
     try {
       await signOut(auth);
+      toast.info("Logged out!");
     } catch {
       toast.error("Logout failed!");
     }
