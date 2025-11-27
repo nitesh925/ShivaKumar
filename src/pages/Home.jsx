@@ -63,6 +63,7 @@ const goToCategories = () => {
         {/* VIDEO BANNER */}
         <div className="video-container">
           <video autoPlay loop muted playsInline className="home-video">
+             <source src="/videos/videocarousel.webm" type="video/webm" />
             <source src="/videos/videocarousel.mp4" type="video/mp4" />
           </video>
         </div>
@@ -152,7 +153,8 @@ const goToCategories = () => {
         loop
         playsInline
       >
-        <source src={bannerVideo} type="video/mp4" />
+        <source src="/videos/banner.webm" type="video/webm" />
+  <source src="/videos/banner.mp4" type="video/mp4" />
       </video>
 
       <div className="video-content">

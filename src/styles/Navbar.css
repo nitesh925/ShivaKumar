@@ -7,12 +7,17 @@
   position: sticky;
   top: 0;
   z-index: 1000;
+  user-select: none;     
+}
+* {
+  -webkit-tap-highlight-color: transparent;
 }
 
 .navbar-container {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  user-select: none;     
 }
 
 /* LEFT MENU */
@@ -27,6 +32,7 @@
   left: 50%;
   transform: translateX(-50%);
   cursor: pointer;
+  user-select: none;     
 }
 
 .logo-img {
