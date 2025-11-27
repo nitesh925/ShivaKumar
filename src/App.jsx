@@ -31,6 +31,8 @@ import CategoryProducts from "./pages/CategoryProducts";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
+import AdminRoute from "./components/AdminRoute"; // ⭐ MAKE SURE THIS IS CORRECT PATH
+
 // ----------------------------
 // LAYOUT WRAPPER
 // ----------------------------
@@ -47,56 +49,61 @@ const Layout = ({ children }) => {
 
 const App = () => {
   return (
-    <>
-      <ScrollToTop />
+    <AuthProvider>
+      <CartProvider>
+        <ScrollToTop />
 
-      
+        <Routes>
 
-          <Routes>
+          {/* -------- PUBLIC ROUTES (NO NAVBAR) -------- */}
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
 
-            {/* -------- PUBLIC ROUTES WITHOUT NAVBAR -------- */}
-            <Route path="/login" element={<Login />} />
-            <Route path="/register" element={<Register />} />
+          {/* -------- MAIN ROUTES WITH NAVBAR/FOOTER -------- */}
+          <Route
+            path="/*"
+            element={
+              <Layout>
+                <Routes>
+                  <Route path="/" element={<Home />} />
+                  <Route path="/home" element={<Home />} />
+                  <Route path="/about" element={<About />} />
+                  <Route path="/profile" element={<Profile />} />
+                  <Route path="/matches" element={<Matches />} />
+                  <Route path="/contact" element={<Contact />} />
+                  <Route path="/booking" element={<PhonePage />} />
+                  <Route path="/services/:id" element={<ServiceDetail />} />
+                  <Route path="/cart" element={<Cart />} />
+                  <Route path="/privacy" element={<Privacy />} />
+                  <Route path="/terms" element={<Terms />} />
 
-            {/* -------- MAIN WEBSITE ROUTES WITH LAYOUT -------- */}
-            <Route
-              path="/*"
-              element={
-                <Layout>
-                  <Routes>
+                  {/* CATEGORY PRODUCTS */}
+                  <Route path="/category/:categoryName" element={<CategoryProducts />} />
 
-                    <Route path="/" element={<Home />} />
-                    <Route path="/home" element={<Home />} />
-                    <Route path="/about" element={<About />} />
-                    <Route path="/profile" element={<Profile />} />
-                    <Route path="/matches" element={<Matches />} />
-                    <Route path="/contact" element={<Contact />} />
-                    <Route path="/booking" element={<PhonePage />} />
-                    <Route path="/services/:id" element={<ServiceDetail />} />
-                    <Route path="/cart" element={<Cart />} />
-                    <Route path="/privacy" element={<Privacy />} />
-                    <Route path="/terms" element={<Terms />} />
-                    <Route path="/category/:categoryName" element={<CategoryProducts />} />
+                  {/* PRODUCT LISTING */}
+                  <Route path="/categories" element={<CategoriesPage />} />
+                  <Route path="/allproducts" element={<AllProductsPage />} />
+                  <Route path="/category/almonds" element={<AlmondsPage />} />
 
-                    {/* PRODUCT ROUTES */}
-                    <Route path="/category/almonds" element={<AlmondsPage />} />
-                    <Route path="/categories" element={<CategoriesPage />} />
-                    <Route path="/allproducts" element={<AllProductsPage />} />
+                  {/* ⭐ ADMIN PROTECTED ROUTE */}
+                  <Route
+                    path="/add-product"
+                    element={
+                      <AdminRoute>
+                        <AddProductPage />
+                      </AdminRoute>
+                    }
+                  />
+                </Routes>
+              </Layout>
+            }
+          />
 
-                    {/* ADMIN */}
-                    <Route path="/add-product" element={<AddProductPage />} />
+        </Routes>
 
-                  </Routes>
-                </Layout>
-              }
-            />
-
-          </Routes>
-
-        
-
-      <ToastContainer position="top-center" autoClose={2000} />
-    </>
+        <ToastContainer position="top-center" autoClose={2000} />
+      </CartProvider>
+    </AuthProvider>
   );
 };
 

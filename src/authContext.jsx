@@ -9,25 +9,29 @@ const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
   const [currentUser, setCurrentUser] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [isAdmin, setIsAdmin] = useState(false);
 
   const prevUserRef = useRef(null);
-  const skipLoginToast = useRef(false); // <-- IMPORTANT
+  const skipLoginToast = useRef(false);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
       const previousUser = prevUserRef.current;
 
-      // Skip toast for new unverified registration
-      if (skipLoginToast.current && user && !user.emailVerified) {
-        skipLoginToast.current = false;
+      if (user) {
+        // 👑 CHECK ADMIN CLAIM
+        const token = await user.getIdTokenResult(true);
+        setIsAdmin(token.claims.admin === true);
       } else {
-        // Normal login toast (only for verified users)
-        if (!previousUser && user && user.emailVerified) {
-          toast.success("Logged in successfully!");
-        }
+        setIsAdmin(false);
       }
 
-      // Logout toast
+      // 🔔 LOGIN TOAST
+      if (!previousUser && user && user.emailVerified) {
+        toast.success("Logged in successfully!");
+      }
+
+      // 🔔 LOGOUT TOAST
       if (previousUser && !user) {
         toast.info("Logged out!");
       }
@@ -40,6 +44,7 @@ export const AuthProvider = ({ children }) => {
     return () => unsubscribe();
   }, []);
 
+  // 🔐 LOGOUT FUNCTION
   const logout = async () => {
     try {
       await signOut(auth);
@@ -49,7 +54,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ currentUser, logout, skipLoginToast }}>
+    <AuthContext.Provider value={{ currentUser, isAdmin, logout }}>
       {!loading && children}
     </AuthContext.Provider>
   );

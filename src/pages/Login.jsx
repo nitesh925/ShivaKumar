@@ -10,6 +10,8 @@ import {
   signInWithPopup,
 } from "firebase/auth";
 
+const ADMIN_UID = "eliXhzH33DUQfj9bz1hwmHDRzKP2"; // <-- your admin UID
+
 const Login = () => {
   const navigate = useNavigate();
 
@@ -19,7 +21,7 @@ const Login = () => {
   const [infoMsg, setInfoMsg] = useState("");
 
   // --------------------------------------------------------
-  // EMAIL + PASSWORD LOGIN
+  // NORMAL USER LOGIN
   // --------------------------------------------------------
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -53,6 +55,37 @@ const Login = () => {
   };
 
   // --------------------------------------------------------
+  // ADMIN LOGIN (NO EMAIL VERIFICATION REQUIRED)
+  // --------------------------------------------------------
+  const handleAdminLogin = async () => {
+    setErrorMsg("");
+
+    if (!email || !password) {
+      setErrorMsg("Enter admin email & password.");
+      return;
+    }
+
+    try {
+      const userCredential = await signInWithEmailAndPassword(auth, email, password);
+
+      const user = userCredential.user;
+
+      // Check if this is the admin
+      if (user.uid !== ADMIN_UID) {
+        setErrorMsg("Not an admin account.");
+        return;
+      }
+
+      // Admin success → redirect
+      navigate("/add-product");
+
+    } catch (error) {
+      console.log(error);
+      setErrorMsg("Admin login failed.");
+    }
+  };
+
+  // --------------------------------------------------------
   // PASSWORD RESET
   // --------------------------------------------------------
   const handlePasswordReset = async () => {
@@ -66,7 +99,7 @@ const Login = () => {
 
     try {
       await sendPasswordResetEmail(auth, email);
-      setInfoMsg("Password reset email sent! Check your inbox.");
+      setInfoMsg("Password reset email sent!");
     } catch (error) {
       console.log(error);
       setErrorMsg("Failed to send reset email.");
@@ -82,15 +115,6 @@ const Login = () => {
 
     try {
       const result = await signInWithPopup(auth, provider);
-
-      const user = result.user;
-
-      // Google accounts are already verified
-      if (!user.emailVerified && user.providerData[0].providerId === "password") {
-        setErrorMsg("Please verify your email first.");
-        return;
-      }
-
       navigate("/home");
     } catch (error) {
       console.log(error);
@@ -131,6 +155,18 @@ const Login = () => {
             Forgot Password?
           </p>
 
+          <button className="login-btn">Login</button>
+
+          {/* NEW ADMIN LOGIN BUTTON */}
+          <button
+            type="button"
+            className="login-btn admin-btn"
+            onClick={handleAdminLogin}
+            style={{ background: "#8b0000", marginTop: "10px" }}
+          >
+            Admin Login
+          </button>
+
           <div className="divider-with-text">
             <span className="divider-text">Login With</span>
           </div>
@@ -140,13 +176,10 @@ const Login = () => {
               <FaFacebookF />
             </div>
 
-            {/* GOOGLE LOGIN BUTTON */}
             <div className="social-circle google" onClick={handleGoogleLogin}>
               <FaGoogle />
             </div>
           </div>
-
-          <button className="login-btn">Login</button>
 
           <p className="signup-text">
             Not A Registered User?{" "}

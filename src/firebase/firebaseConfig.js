@@ -2,11 +2,12 @@
 import { initializeApp } from "firebase/app";
 
 // Import Firebase services
-import { getAuth } from "firebase/auth";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
 import { getStorage } from "firebase/storage";
 import { getAnalytics } from "firebase/analytics";
 import { GoogleAuthProvider } from "firebase/auth";
+
 // Your Firebase configuration
 const firebaseConfig = {
   apiKey: "AIzaSyC12SPuuR1h42QzFNf-QIOTMMk9g73xl98",
@@ -15,7 +16,7 @@ const firebaseConfig = {
   storageBucket: "shivakumar-stores.firebasestorage.app",
   messagingSenderId: "651050789626",
   appId: "1:651050789626:web:cc1c9395f84c5bc9187743",
-  measurementId: "G-YV1E4FNHDQ"
+  measurementId: "G-YV1E4FNHDQ",
 };
 
 // Initialize Firebase
@@ -29,3 +30,21 @@ export const storage = getStorage(app);
 // Optional: analytics (only works on https or localhost)
 export const analytics = getAnalytics(app);
 export const googleProvider = new GoogleAuthProvider();
+
+
+// ---------------------------------------------
+// 🔥 ADMIN CHECK – Export a helper function
+// ---------------------------------------------
+export const ADMIN_UID = "eliXhzH33DUQfj9bz1hwmHDRzKP2"; // your admin UID
+
+export const checkAdmin = (callback) => {
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+      callback(user.uid === ADMIN_UID);
+    } else {
+      callback(false);
+    }
+  });
+};
+
+export default app;

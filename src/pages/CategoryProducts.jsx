@@ -11,23 +11,15 @@ const isValid = (value) => {
   return !invalid.includes(value);
 };
 
-// ⭐ AUTO OFFER CALCULATION FUNCTION
 const getOffer = (product) => {
-  if (isValid(product.offer)) {
-    return product.offer; // Use existing offer
-  }
+  if (isValid(product.offer)) return product.offer;
 
-  // If no MRP or price, cannot calculate
-  if (!product.mrp || !product.price || product.mrp <= 0) {
-    return null;
-  }
+  if (!product.mrp || !product.price || product.mrp <= 0) return null;
 
-  // Calculate offer %
   const discount = ((product.mrp - product.price) / product.mrp) * 100;
-
   if (discount <= 0) return null;
 
-  return Math.round(discount); // return rounded %
+  return Math.round(discount);
 };
 
 const CategoryProducts = () => {
@@ -45,6 +37,7 @@ const CategoryProducts = () => {
           ...doc.data(),
         }));
 
+        // 🔥 FIX HERE → convert both sides to lowercase
         const filtered = allProducts.filter(
           (item) =>
             item.category &&
@@ -73,22 +66,18 @@ const CategoryProducts = () => {
       ) : (
         <div className="products-grid">
           {products.map((product) => {
-            const calculatedOffer = getOffer(product); // ⭐ Auto-offer result
+            const calculatedOffer = getOffer(product);
 
             return (
               <div key={product.id} className="product-card">
-
-                {/* TAG LEFT */}
                 {isValid(product.tag) && (
                   <span className="tag-left">{product.tag}</span>
                 )}
 
-                {/* OFFER RIGHT */}
                 {calculatedOffer && (
                   <span className="tag-right">{calculatedOffer}% off</span>
                 )}
 
-                {/* IMAGE */}
                 {isValid(product.image) ? (
                   <img
                     src={product.image}
@@ -99,19 +88,15 @@ const CategoryProducts = () => {
                   <div className="image-placeholder"></div>
                 )}
 
-                {/* BRAND + RATING */}
                 <div className="brand-rating">
                   <span className="brand">{product.brand}</span>
-
                   {isValid(product.rating) && (
                     <span className="rating">⭐ {product.rating}</span>
                   )}
                 </div>
 
-                {/* TITLE */}
                 <p className="product-title">{product.title}</p>
 
-                {/* PRICE */}
                 <p className="product-price">
                   {isValid(product.mrp) && (
                     <span className="mrp">₹{product.mrp}</span>
@@ -119,12 +104,10 @@ const CategoryProducts = () => {
                   <span className="final-price">₹{product.price}</span>
                 </p>
 
-                {/* WEIGHT */}
                 {isValid(product.weight) && (
                   <p className="weight">({product.weight})</p>
                 )}
 
-                {/* ADD TO CART */}
                 <button
                   className="add-cart-btn"
                   onClick={() => addToCart(product)}
