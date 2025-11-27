@@ -1,37 +1,62 @@
 import React, { useState } from "react";
-import { db } from "../firebase/firebaseConfig"; 
+import { db } from "../firebase/firebaseConfig";
 import { collection, addDoc } from "firebase/firestore";
+import "../styles/AddProductPage.css";
 
 const AddProductPage = () => {
-  const [name, setName] = useState("");
-  const [price, setPrice] = useState("");
-  const [imageUrl, setImageUrl] = useState("");
-  const [category, setCategory] = useState("");
+  const [formData, setFormData] = useState({
+    title: "",
+    brand: "",
+    rating: "",
+    mrp: "",
+    price: "",
+    offer: "",
+    tag: "",
+    weight: "",
+    image: "",
+    category: "",
+  });
+
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!name || !price || !imageUrl || !category) {
-      alert("Please fill all fields");
-      return;
+    // REQUIRED FIELDS ONLY
+    const requiredFields = ["title", "brand", "mrp", "price", "weight", "image", "category"];
+
+    for (const field of requiredFields) {
+      if (!formData[field]) {
+        alert(`${field.toUpperCase()} is required`);
+        return;
+      }
     }
 
     try {
       await addDoc(collection(db, "products"), {
-        name,
-        price: Number(price),
-        imageUrl,
-        category,
+        ...formData,
+        rating: formData.rating ? Number(formData.rating) : null,
+        mrp: Number(formData.mrp),
+        price: Number(formData.price),
         createdAt: new Date(),
       });
 
       alert("Product Added Successfully!");
 
-      setName("");
-      setPrice("");
-      setImageUrl("");
-      setCategory("");
-
+      setFormData({
+        title: "",
+        brand: "",
+        rating: "",
+        mrp: "",
+        price: "",
+        offer: "",
+        tag: "",
+        weight: "",
+        image: "",
+        category: "",
+      });
     } catch (err) {
       console.error(err);
       alert("Error adding product");
@@ -39,24 +64,62 @@ const AddProductPage = () => {
   };
 
   return (
-    <div style={{ padding: "20px" }}>
+    <div className="add-product-container">
       <h2>Add New Product</h2>
 
-      <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", maxWidth: "350px" }}>
+      <form className="add-product-form" onSubmit={handleSubmit}>
         
-        <label>Product Name</label>
-        <input value={name} onChange={(e) => setName(e.target.value)} />
+        <label>Title *</label>
+        <input name="title" value={formData.title} onChange={handleChange} />
 
-        <label>Price</label>
-        <input type="number" value={price} onChange={(e) => setPrice(e.target.value)} />
+        <label>Brand *</label>
+        <input name="brand" value={formData.brand} onChange={handleChange} />
 
-        <label>Image URL</label>
-        <input value={imageUrl} onChange={(e) => setImageUrl(e.target.value)} />
+        <label>Rating (Optional)</label>
+        <input
+          type="number"
+          step="0.1"
+          name="rating"
+          value={formData.rating}
+          onChange={handleChange}
+        />
 
-        <label>Category</label>
-        <input value={category} onChange={(e) => setCategory(e.target.value)} />
+        <label>MRP *</label>
+        <input
+          type="number"
+          name="mrp"
+          value={formData.mrp}
+          onChange={handleChange}
+        />
 
-        <button type="submit" style={{ marginTop: "15px" }}>Add Product</button>
+        <label>Price *</label>
+        <input
+          type="number"
+          name="price"
+          value={formData.price}
+          onChange={handleChange}
+        />
+
+        <label>Offer (Optional)</label>
+        <input name="offer" value={formData.offer} onChange={handleChange} />
+
+        <label>Tag (Optional)</label>
+        <input name="tag" value={formData.tag} onChange={handleChange} />
+
+        <label>Weight *</label>
+        <input name="weight" value={formData.weight} onChange={handleChange} />
+
+        <label>Image URL *</label>
+        <input name="image" value={formData.image} onChange={handleChange} />
+
+        <label>Category *</label>
+        <input
+          name="category"
+          value={formData.category}
+          onChange={handleChange}
+        />
+
+        <button type="submit" className="submit-btn">Add Product</button>
       </form>
     </div>
   );

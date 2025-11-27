@@ -169,6 +169,10 @@ const goToCategories = () => {
         </button>
       </div>
     </div>
+
+          {/* <div className='blank-image'>
+            <img src="/images/blank1.png" alt="blank" />
+          </div> */}
       </div>
     </>
   );

@@ -1,0 +1,48 @@
+.add-product-container {
+  padding: 20px;
+  max-width: 400px;
+  margin: auto;
+}
+
+.add-product-container h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.add-product-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.add-product-form label {
+  font-weight: 600;
+  margin-bottom: 5px;
+}
+
+.add-product-form input {
+  padding: 8px 10px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+}
+
+.add-product-form input:focus {
+  outline: none;
+  border-color: #ad5617;
+}
+
+.submit-btn {
+  margin-top: 15px;
+  padding: 10px;
+  background: linear-gradient(90deg, #ad5617, #883a02);
+  color: white;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.submit-btn:hover {
+  background: linear-gradient(90deg, #ad5617, #883a02);
+}

@@ -1,22 +1,26 @@
-.video-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr); /* 2 videos per row */
-  gap: 10px;
-  padding: 10px;
-  justify-content: center;
+.about-container {
+  max-width: 700px;
+  margin: 40px auto;
+  padding: 20px;
+  text-align: center;
+  line-height: 1.7;
+  color: #333;
+  background-color: rgb(255, 255, 255);
 }
 
-.video-item {
-  display: block;
-  width: 100%;
-  max-width: 100%;
-  border-radius: 10px;
-  object-fit: cover;
+.about-title {
+  font-size: 22px;
+  font-weight: 700;
+  margin-bottom: 20px;
+  color: #000000;
 }
 
-/* Responsive for mobile */
-@media (max-width: 768px) {
-  .video-grid {
-      grid-template-columns: repeat(1, 1fr); /* 1 video per row */
-  }
+.about-text {
+  font-size: 16px;
+  margin-bottom: 15px;
+}
+
+.about-text strong {
+  font-weight: 700;
+  color: #000;
 }

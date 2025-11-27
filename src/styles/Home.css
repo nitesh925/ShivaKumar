@@ -456,7 +456,16 @@ body{
     object-fit: cover;
     display: block;
   }
+.blank-image {
+  width: 66.1%;
+  height: auto;
+  object-fit: cover;
   
+  display: flex;
+  justify-content: center;
+}
+
+
   @media (max-width: 600px) {
     .image-card img {
       height: 50px;

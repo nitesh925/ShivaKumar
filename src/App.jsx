@@ -24,9 +24,10 @@ import AlmondsPage from "./pages/AlmondsPage";
 import CategoriesPage from "./pages/CategoriesPage";
 import AllProductsPage from "./pages/AllProductsPage";
 import AddProductPage from "./pages/AddProductPage";
-
+import Terms from "./pages/Terms";
+import Privacy from "./pages/Privacy";
 import ScrollToTop from "./components/ScrollToTop";
-
+import CategoryProducts from "./pages/CategoryProducts";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -73,6 +74,9 @@ const App = () => {
                     <Route path="/booking" element={<PhonePage />} />
                     <Route path="/services/:id" element={<ServiceDetail />} />
                     <Route path="/cart" element={<Cart />} />
+                    <Route path="/privacy" element={<Privacy />} />
+                    <Route path="/terms" element={<Terms />} />
+                    <Route path="/category/:categoryName" element={<CategoryProducts />} />
 
                     {/* PRODUCT ROUTES */}
                     <Route path="/category/almonds" element={<AlmondsPage />} />

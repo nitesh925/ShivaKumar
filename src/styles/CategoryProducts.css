@@ -1,0 +1,130 @@
+.category-products-container {
+  padding: 15px;
+}
+
+.category-products-title {
+  text-align: center;
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 20px;
+  text-transform: capitalize;
+}
+
+.products-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 18px;
+}
+
+/* PRODUCT CARD */
+.product-card {
+  position: relative;
+  background: #fff;
+  padding: 15px;
+  border-radius: 18px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.08);
+  text-align: left;
+  width: 220px;
+  min-width: 220px;
+  max-width: 220px;
+}
+
+/* TAG LEFT */
+.tag-left {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background: #ffedf0;
+  color: #b93636;
+  font-size: 11px;
+  padding: 4px 10px;
+  border-radius: 20px;
+}
+
+/* OFFER RIGHT */
+.tag-right {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: #ffe7e7;
+  color: #ff3b3b;
+  font-size: 11px;
+  padding: 4px 10px;
+  border-radius: 20px;
+}
+
+/* IMAGE FIXED */
+.product-img,
+.image-placeholder {
+  width: 100%;
+  height: 160px;
+  object-fit: contain;
+  background: #f3f3f3;
+  border-radius: 12px;
+  margin: 20px 0 10px 0;
+}
+
+/* BRAND + RATING */
+.brand-rating {
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+  margin-bottom: 4px;
+}
+
+.brand {
+  font-weight: 700;
+  color: #333;
+}
+
+.rating {
+  background: #883a02;
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+/* TITLE */
+.product-title {
+  font-size: 15px;
+  font-weight: 600;
+  margin: 5px 0;
+  color: #333;
+}
+
+/* PRICE */
+.product-price {
+  font-size: 14px;
+  margin-top: 5px;
+}
+
+.mrp {
+  text-decoration: line-through;
+  color: #888;
+  margin-right: 6px;
+  font-size: 13px;
+}
+
+.final-price {
+  font-size: 17px;
+  font-weight: 700;
+  color: #222;
+}
+
+/* WEIGHT */
+.weight {
+  font-size: 13px;
+  color: #666;
+}
+
+/* ADD TO CART */
+.add-cart-btn {
+  width: 100%;
+  background: #883a02;
+  color: white;
+  border: none;
+  padding: 10px 0;
+  margin-top: 10px;
+  border-radius: 8px;
+  font-size: 15px;
+  font-weight: 600;
+}

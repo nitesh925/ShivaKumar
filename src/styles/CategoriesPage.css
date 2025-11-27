@@ -5,44 +5,58 @@
 }
 
 .categories-title {
-  font-size: 28px;
+  font-size: 26px;
   font-weight: 700;
-  margin-bottom: 25px;
+  margin-bottom: 20px;
 }
 
 .categories-grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 25px;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 18px;
 }
 
-/* ✨ Card Shadow + Border */
+/* Card */
 .category-card {
   text-decoration: none;
   color: black;
   background: white;
   border-radius: 12px;
-  padding: 0px;
-  border: 1px solid #e5e5e5;       /* light border */
-  box-shadow: 0 4px 10px rgba(0,0,0,0.15);  /* soft shadow */
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  border: 1px solid #e5e5e5;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.10);
+  transition: 0.2s ease-in-out;
+  padding-bottom: 12px;
 }
 
-/* Optional hover effect */
-.category-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 6px 14px rgba(0,0,0,0.22);
+/* Keep cards small and equal */
+.category-card {
+  height: 200px;         /* SAME height on all screens */
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
 }
 
-.category-img {
+/* Image box — small fixed height */
+.category-img-box {
   width: 100%;
-  height: 160px;
-  object-fit: contain;
-  
+  height: 110px;        /* small fixed height */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
 }
 
+/* Image fits box but small */
+.category-img {
+  width: 90%;
+  height: 100%;
+  object-fit: contain;   /* contain = keeps product visible */
+}
+
+/* Name stays visible always */
 .category-name {
-  font-size: 18px;
+  font-size: 16px;
   font-weight: 600;
-  margin-bottom: 20px;
+  margin-top: 10px;
 }
