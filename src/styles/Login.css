@@ -1,10 +1,15 @@
 /* Wrapper */
+/* Wrapper */
 .login-wrapper {
   width: 100%;
+  height: 100vh;              /* Full screen height */
   display: flex;
-  justify-content: center;
+  justify-content: center;    /* Center horizontally */
+  align-items: center;        /* Center vertically */
   padding: 20px;
+  background: #fafafa;        /* Optional light background */
 }
+
 
 /* Card */
 .login-card {

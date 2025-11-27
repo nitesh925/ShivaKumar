@@ -103,8 +103,8 @@
 }
 
 .signup-btn {
-  background: black;
-  color: white;
+  
+  color: rgb(0, 0, 0);
 }
 
 /* SIDEBAR LINKS */
@@ -130,6 +130,7 @@
   padding: 10px;
   color: #333;
   text-decoration: none;
+  font-size: small;
 }
 
 /* LOGOUT BUTTON */
@@ -137,7 +138,7 @@
   display: block;
   margin: 20px;
   padding: 12px;
-  background: red;
+  background: linear-gradient(90deg, #ad5617, #883a02);
   color: #fff !important;
   text-align: center;
   border-radius: 6px;

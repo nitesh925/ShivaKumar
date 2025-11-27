@@ -2,9 +2,22 @@ import React, { useMemo } from "react";
 import { useCart } from "../cartContext";
 import "../styles/Cart.css";
 import { toast } from "react-toastify";
+import { useAuth } from "../authContext";
+import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 
 export default function Cart() {
   const { cart, increaseQty, decreaseQty, removeFromCart } = useCart();
+  const { currentUser } = useAuth();
+  const navigate = useNavigate();
+
+  // ---------------- Add Razorpay Script ----------------
+  useEffect(() => {
+    const script = document.createElement("script");
+    script.src = "https://checkout.razorpay.com/v1/checkout.js";
+    script.async = true;
+    document.body.appendChild(script);
+  }, []);
 
   // ---------------- CALCULATIONS ----------------
   const { mrpTotal, discountTotal, subTotal } = useMemo(() => {
@@ -26,6 +39,49 @@ export default function Cart() {
     };
   }, [cart]);
 
+  const totalAmount = subTotal; // Final payable amount
+
+  // ---------------- RAZORPAY PAYMENT ----------------
+  const handlePayment = () => {
+    if (!currentUser) {
+      toast.error("Please login before placing an order!");
+      navigate("/login");
+      return;
+    }
+
+    if (typeof window.Razorpay === "undefined") {
+      toast.error("Payment SDK failed to load. Try again.");
+      return;
+    }
+
+    const options = {
+      key: "rzp_test_RkhFp0n5yUCIfH", // 🔴 Replace with your Razorpay Key
+      amount: totalAmount * 100, // convert to paisa
+      currency: "INR",
+      name: "Siva Kumar General Stores",
+      description: "Order Payment",
+      image: "/images/SKnew.png",
+
+      handler: function (response) {
+        toast.success("Payment Successful!");
+        console.log(response);
+        navigate("/order-success");
+      },
+
+      prefill: {
+        name: currentUser?.displayName || "Customer",
+        email: currentUser?.email || "customer@example.com",
+        contact: "9999999999",
+      },
+
+      theme: {
+        color: "#ad5617",
+      },
+    };
+
+    const rzp = new window.Razorpay(options);
+    rzp.open();
+  };
 
   // ---------------- MANUAL ORDER WHATSAPP ----------------
   const sendManualOrder = () => {
@@ -43,11 +99,10 @@ export default function Cart() {
 
     const finalMessage = `Hello, I would like to place a manual order:%0A%0A${orderText}%0A%0ATotal: ₹${total}/-`;
 
-    const whatsappNumber = "919040555925"; // Your WhatsApp number
+    const whatsappNumber = "919040555925";
 
     window.open(`https://wa.me/${whatsappNumber}?text=${finalMessage}`, "_blank");
   };
-
 
   return (
     <div className="cart-drawer">
@@ -124,25 +179,21 @@ export default function Cart() {
           </div>
 
           <p className="note">(Inclusive of all taxes)</p>
-          <p className="note">*Coupon code is applied at checkout.</p>
-          <p className="note">*Shipping is calculated at checkout.</p>
         </div>
       )}
 
       {/* ---------------- CHECKOUT BUTTONS ---------------- */}
       {cart.length > 0 && (
         <div className="checkout-bar">
+          <button className="checkout-btn" onClick={handlePayment}>
+            Place Order Now
+          </button>
 
-          <button className="checkout-btn">Place Order Now</button>
-
-          {/* Manual Order Option */}
           <div className="manual-order" onClick={sendManualOrder}>
             <p>Order Manually</p>
           </div>
-
         </div>
       )}
-
     </div>
   );
 }

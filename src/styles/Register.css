@@ -1,10 +1,15 @@
 /* Main wrapper */
+/* Wrapper */
 .register-wrapper {
   width: 100%;
+  height: 100vh;              /* Full screen height */
   display: flex;
-  justify-content: center;
-  padding: 10px;
+  justify-content: center;    /* Center horizontally */
+  align-items: center;        /* Center vertically */
+  padding: 20px;
+  background: #fafafa;        /* Optional light background */
 }
+
 
 /* Card */
 .register-card {
@@ -154,8 +159,11 @@
   margin-top: 5px;
   font-size: 14px;
   color: #444;
+}.login-link{
+  color: #ad5617;
+  font-weight: 700;
+  cursor: pointer;
 }
-
 .login-text span {
   color: #ad5617;
   cursor: pointer;
