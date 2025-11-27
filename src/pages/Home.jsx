@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import '../styles/Home.css';
 import { Link } from 'react-router-dom';
 import { useNavigate } from "react-router-dom";
-import bannerVideo from "../videos/banner.mp4"; 
+import bannerVideo from "/videos/banner.mp4"; 
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 const skills = [
   { id: 'Almonds', name: 'Almonds', image: '/images/Almonds.png' },

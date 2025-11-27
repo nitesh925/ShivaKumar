@@ -11,10 +11,10 @@ import ExpandLessIcon from "@mui/icons-material/ExpandLess";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 
 const Navbar = () => {
-  const { currentUser, userData, logout } = useAuth(); // ✅ FIXED
+  const { currentUser, logout } = useAuth();
   const navigate = useNavigate();
-
   const { cart } = useCart();
+
   const cartCount = cart.reduce((a, b) => a + b.qty, 0);
 
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -50,75 +50,47 @@ const Navbar = () => {
       {/* TOP NAVBAR */}
       <nav className="navbar">
         <div className="navbar-container">
-          {/* LOGO */}
-          <div
-            className="navbar-logo"
-            onClick={() => navigate("/home")}
-            style={{ cursor: "pointer" }}
-          >
-            <img src="/images/SKLogomain.png" alt="SK Logo" className="logo-img" /> Dry Fruits
+
+          {/* LEFT MENU ICON */}
+          <div className="left-menu" onClick={() => setIsSidebarOpen(true)}>
+            <MenuIcon />
           </div>
 
-          {/* RIGHT ICONS */}
-          <div className="right-icons">
-            {/* CART WITH COUNT */}
-            <div className="cart-icon" onClick={() => navigate("/cart")}>
-              <ShoppingCartOutlinedIcon />
-              {cartCount > 0 && <span className="cart-count">{cartCount}</span>}
-            </div>
+          {/* LOGO CENTER */}
+          <div className="navbar-logo" onClick={() => navigate("/home")}>
+            <img src="/images/SKnew.png" alt="SK Logo" className="logo-img" />
+          </div>
 
-            {/* MENU */}
-            <div className="menu-icon" onClick={() => setIsSidebarOpen(true)}>
-              <MenuIcon />
-            </div>
+          {/* RIGHT CART ICON */}
+          <div className="right-cart" onClick={() => navigate("/cart")}>
+            <ShoppingCartOutlinedIcon />
+            {cartCount > 0 && <span className="cart-count">{cartCount}</span>}
           </div>
         </div>
       </nav>
 
-      {/* SIDEBAR */}
+      {/* SIDEBAR – LEFT OPENING */}
       <div className={`sidebar ${isSidebarOpen ? "open" : ""}`}>
         <div className="sidebar-header">
           {currentUser ? `Hi, ${currentUser.displayName || "User"}` : "Shop"}
-
-          <CloseIcon
-            className="close-icon"
-            onClick={() => setIsSidebarOpen(false)}
-          />
+          <CloseIcon className="close-icon" onClick={() => setIsSidebarOpen(false)} />
         </div>
 
-        {/* LOGIN / SIGNUP */}
         {!currentUser && (
           <div className="auth-buttons">
-            <Link
-              to="/login"
-              className="login-btn"
-              onClick={() => setIsSidebarOpen(false)}
-            >
+            <Link to="/login" className="login-btn" onClick={() => setIsSidebarOpen(false)}>
               Login
             </Link>
-
-            <Link
-              to="/register"
-              className="signup-btn"
-              onClick={() => setIsSidebarOpen(false)}
-            >
+            <Link to="/register" className="signup-btn" onClick={() => setIsSidebarOpen(false)}>
               Sign up →
             </Link>
           </div>
         )}
 
-        {/* CART OPTION */}
-        <div
-          className="sidebar-cart-row"
-          onClick={() => {
-            navigate("/cart");
-            setIsSidebarOpen(false);
-          }}
-        >
-          <ShoppingCartOutlinedIcon /> <span>My Cart</span>
-        </div>
+        {/* CART BUTTON */}
+        
 
-        {/* CATEGORIES */}
+        {/* CATEGORY LIST */}
         <ul className="sidebar-links">
           {categories.map((cat) => (
             <li key={cat}>
@@ -143,7 +115,6 @@ const Navbar = () => {
           ))}
         </ul>
 
-        {/* LOGOUT */}
         {currentUser && (
           <Link to="/" className="logout-btn" onClick={handleLogout}>
             Logout
@@ -151,7 +122,6 @@ const Navbar = () => {
         )}
       </div>
 
-      {/* OVERLAY */}
       {isSidebarOpen && (
         <div className="overlay" onClick={() => setIsSidebarOpen(false)}></div>
       )}
