@@ -75,7 +75,7 @@ export default function Cart() {
     }
 
     const options = {
-      key: "rzp_test_RkhFp0n5yUCIfH",
+      key: "rzp_live_RlDFtwbtIBcTEE",
       amount: totalAmount * 100,
       currency: "INR",
       name: "Siva Kumar General Stores",
