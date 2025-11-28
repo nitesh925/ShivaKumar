@@ -78,7 +78,7 @@ const Login = () => {
       }
 
       toast.success("Admin logged in!");
-      navigate("/add-product", { replace: true });
+      navigate("/admin", { replace: true });
 
     } catch (error) {
       console.log(error);

@@ -1,0 +1,128 @@
+/* ----- MAIN CONTAINER ----- */
+.manage-container {
+  width: 90%;
+  max-width: 1200px;
+  margin: auto;
+  padding: 20px;
+}
+
+.manage-container h1 {
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 32px;
+  font-weight: bold;
+}
+
+/* ----- PRODUCT GRID ----- */
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 20px;
+}
+
+/* ----- PRODUCT CARD ----- */
+.product-card-admin {
+  background: #fff;
+  border-radius: 12px;
+  padding: 15px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  text-align: center;
+  transition: 0.3s ease-in-out;
+}
+
+.product-card-admin:hover {
+  transform: translateY(-5px);
+}
+
+/* ----- PRODUCT IMAGE ----- */
+.product-img-admin {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  border-radius: 10px;
+  margin-bottom: 10px;
+}
+
+/* ----- BUTTONS ----- */
+.admin-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 15px;
+}
+
+.edit-btn, .delete-btn {
+  flex: 1;
+  padding: 10px;
+  border: none;
+  cursor: pointer;
+  margin: 5px;
+  border-radius: 8px;
+  font-weight: bold;
+  font-size: 14px;
+}
+
+.edit-btn {
+  background: #007937;
+  color: white;
+}
+
+.delete-btn {
+  background: #b10600;
+  color: white;
+}
+
+/* ----- EDIT MODAL ----- */
+.edit-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+
+.edit-box {
+  width: 400px;
+  background: #fff;
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+}
+
+.edit-box input {
+  width: 100%;
+  padding: 10px;
+  margin: 8px 0;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+}
+
+/* ----- MODAL BUTTONS ----- */
+.edit-actions {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 15px;
+}
+
+.save-btn, .cancel-btn {
+  width: 48%;
+  padding: 10px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.save-btn {
+  background: #28a745;
+  color: white;
+}
+
+.cancel-btn {
+  background: grey;
+  color: white;
+}

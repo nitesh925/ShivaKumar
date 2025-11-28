@@ -1,0 +1,63 @@
+.manage-cat-container {
+  max-width: 600px;
+  margin: auto;
+  padding: 20px;
+}
+
+.add-cat-box {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.add-cat-box input {
+  flex: 1;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
+
+.add-cat-box button {
+  padding: 10px 15px;
+  background: green;
+  color: white;
+  border: none;
+  border-radius: 6px;
+}
+
+.cat-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.cat-item {
+  padding: 12px;
+  background: #fafafa;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-radius: 6px;
+  border: 1px solid #ddd;
+}
+
+.cat-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.cat-actions button {
+  padding: 5px 10px;
+  border-radius: 5px;
+  border: none;
+}
+
+.cat-actions button:first-child {
+  background: orange;
+  color: white;
+}
+
+.cat-actions button:last-child {
+  background: red;
+  color: white;
+}

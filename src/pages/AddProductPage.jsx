@@ -5,8 +5,8 @@ import "../styles/AddProductPage.css";
 import { useAuth } from "../authContext";
 import { Navigate } from "react-router-dom";
 
-// ALL categories including "others"
-const categoryOptions = [
+// All categories including custom option
+const categoryList = [
   "driedfruits",
   "dates",
   "nuts",
@@ -21,7 +21,7 @@ const categoryOptions = [
 const AddProductPage = () => {
   const { isAdmin } = useAuth();
 
-  // ❌ Non-admin users cannot access this page
+  // Non-admin cannot access this page
   if (!isAdmin) return <Navigate to="/" replace />;
 
   const [formData, setFormData] = useState({
@@ -41,7 +41,7 @@ const AddProductPage = () => {
   const handleChange = (e) => {
     const { name, value } = e.target;
 
-    // If user switches category away from "others" → clear customCategory
+    // If user selects anything other than "others", clear custom input
     if (name === "category" && value !== "others") {
       setFormData({
         ...formData,
@@ -57,6 +57,7 @@ const AddProductPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    // Required fields
     const required = ["title", "brand", "mrp", "price", "weight", "image", "category"];
 
     for (let field of required) {
@@ -66,16 +67,18 @@ const AddProductPage = () => {
       }
     }
 
-    // Determine final category
+    // Final category logic
     let finalCategory =
-      formData.category === "others" ? formData.customCategory.trim() : formData.category;
+      formData.category === "others"
+        ? formData.customCategory.trim()
+        : formData.category;
 
     if (formData.category === "others" && !finalCategory) {
-      alert("Please enter a category name for 'others'");
+      alert("Please enter a category name for Others");
       return;
     }
 
-    // Clean category formatting
+    // Format category properly
     finalCategory = finalCategory.toLowerCase().replace(/\s+/g, "");
 
     try {
@@ -95,6 +98,7 @@ const AddProductPage = () => {
 
       alert("✔ Product Added Successfully!");
 
+      // Reset form
       setFormData({
         title: "",
         brand: "",
@@ -111,7 +115,7 @@ const AddProductPage = () => {
     } catch (err) {
       console.error("Error adding product:", err);
       if (err.code === "permission-denied") {
-        alert("❌ Permission denied! Only admin can add products.");
+        alert("❌ Only admin can add products!");
       } else {
         alert("Error adding product");
       }
@@ -164,25 +168,32 @@ const AddProductPage = () => {
         <input name="weight" value={formData.weight} onChange={handleChange} />
 
         <label>Image URL *</label>
-        <input name="image" value={formData.image} onChange={handleChange} />
+        <input
+          name="image"
+          placeholder="Paste image URL"
+          value={formData.image}
+          onChange={handleChange}
+        />
 
         <label>Category *</label>
         <select name="category" value={formData.category} onChange={handleChange}>
-          <option value="">Select Category</option>
-          {categoryOptions.map((cat, i) => (
-            <option key={i} value={cat}>
-              {cat}
-            </option>
-          ))}
-        </select>
+  <option value="">Select Category</option>
+  {categoryList.map((cat, i) => (
+    <option key={i} value={cat.toLowerCase().replace(/\s+/g, "")}>
+      {cat}
+    </option>
+  ))}
+  <option value="others">Others</option>
+</select>
 
-        {/* Custom category when "others" is selected */}
+
+        {/* Custom category field when "others" selected */}
         {formData.category === "others" && (
           <>
             <label>Enter Custom Category *</label>
             <input
               name="customCategory"
-              placeholder="Example: spices, herbs, honey..."
+              placeholder="Example: spices, honey, herbs..."
               value={formData.customCategory}
               onChange={handleChange}
             />
