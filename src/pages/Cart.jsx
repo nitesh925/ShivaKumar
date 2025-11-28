@@ -160,7 +160,7 @@ export default function Cart() {
                 />
 
                 <div className="cart-info">
-                  <h4>{item.title}</h4>
+                  <h4>{item.brand} {item.title}</h4>
 
                   <div className="price-row">
                     <span className="cut">₹{item.mrp}</span>
