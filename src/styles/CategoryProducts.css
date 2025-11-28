@@ -24,7 +24,7 @@
 
 /* PRODUCT CARD – FIXED SIZE ALWAYS */
 .product-card {
-  width: 180px;            /* FIXED WIDTH */
+  width: 175px;            /* FIXED WIDTH */
   height: 390px;           /* FIXED HEIGHT */
   background: #fff;
   padding: 15px;
