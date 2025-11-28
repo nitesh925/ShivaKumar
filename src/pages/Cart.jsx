@@ -1,3 +1,4 @@
+// src/pages/Cart.jsx
 import React, { useMemo } from "react";
 import { useCart } from "../cartContext";
 import "../styles/Cart.css";
@@ -20,12 +21,14 @@ export default function Cart() {
   const { mrpTotal, discountTotal, subTotal } = useMemo(() => {
     let mrp = 0;
     let discount = 0;
+
     cart.forEach((item) => {
       const itemMRP = item.mrp * item.qty;
       const itemPrice = item.price * item.qty;
       mrp += itemMRP;
       discount += itemMRP - itemPrice;
     });
+
     return {
       mrpTotal: mrp,
       discountTotal: discount,
@@ -36,44 +39,16 @@ export default function Cart() {
   const goToCheckout = () => {
     if (!currentUser) {
       toast.error("Please login before placing an order!");
-      navigate("/login");
-      return;
+      return navigate("/login");
     }
     navigate("/checkout");
   };
 
-  const sendManualOrder = () => {
-    const orderText = cart
-      .map(
-        (item) =>
-          `${item.title} (${item.qty} qty) - ₹${item.price * item.qty}`
-      )
-      .join("%0A");
-
-    const total = cart.reduce(
-      (acc, item) => acc + item.price * item.qty,
-      0
-    );
-
-    const finalMessage = `Hello, I would like to place a manual order:%0A%0A${orderText}%0A%0ATotal: ₹${total}/-`;
-
-    const whatsappNumber = "919040555925";
-
-    window.open(
-      `https://wa.me/${whatsappNumber}?text=${finalMessage}`,
-      "_blank"
-    );
-  };
-
   return (
-    <div className="cart-drawer">
+    <div className="cart-container">
       {cart.length === 0 ? (
         <div className="empty-cart-wrapper">
-          <img
-            src="/images/emptycart.png"
-            alt="Empty Cart"
-            className="empty-cart-image"
-          />
+          <img src="/images/emptycart.png" className="empty-cart-image" />
           <h2 className="empty-title">I'm Empty!</h2>
           <p className="empty-subtext">Your cart is feeling lonely.</p>
           <button className="go-shopping-btn" onClick={() => navigate("/")}>
@@ -82,79 +57,71 @@ export default function Cart() {
         </div>
       ) : (
         <>
-          <div className="cart-items">
-            <h2 className="cart-title">Keep Nourishing Your Cart 🛒</h2>
+          <h2 className="cart-heading">
+            Keep Nourishing Your Cart With HEALTHINESS 🛒
+          </h2>
 
+          <div className="cart-items">
             {cart.map((item) => (
               <div className="cart-item" key={item.id}>
-                <img
-                  src={getImage(item.image)}
-                  className="cart-img"
-                />
+                <img src={getImage(item.image)} className="cart-img" />
 
                 <div className="cart-info">
-                  <h4>
+                  <h4 className="item-title">
                     {item.brand} {item.title}
                   </h4>
+
                   <div className="price-row">
                     <span className="cut">₹{item.mrp}</span>
                     <span className="price">₹{item.price}</span>
                   </div>
 
                   <div className="qty-box">
-                    <button onClick={() => decreaseQty(item.id)}>-</button>
-                    <span>{item.qty}</span>
-                    <button onClick={() => increaseQty(item.id)}>+</button>
+                    <button className="qty-btn" onClick={() => decreaseQty(item.id)}>-</button>
+                    <span className="qty-count">{item.qty}</span>
+                    <button className="qty-btn" onClick={() => increaseQty(item.id)}>+</button>
                   </div>
                 </div>
 
-                <button
-                  className="remove-btn"
-                  onClick={() => removeFromCart(item.id)}
-                >
-                  ✕
-                </button>
+                <button 
+  className="remove-text-btn"
+  onClick={() => removeFromCart(item.id)}
+>
+  Remove
+</button>
+
               </div>
             ))}
           </div>
 
-          <div className="order-summary-box">
-            <h2>Order Summary</h2>
+          <div className="order-summary">
+            <h3 className="summary-title">Order Summary</h3>
 
-            <div className="row">
-              <p>MRP:</p>
-              <p>₹{mrpTotal}</p>
+            <div className="summary-row">
+              <p>MRP:</p> <p>₹{mrpTotal}</p>
             </div>
 
-            <div className="row">
-              <p>Offer Discount</p>
-              <p>- ₹{discountTotal}</p>
+            <div className="summary-row">
+              <p>Offer Discount:</p> <p>- ₹{discountTotal}</p>
             </div>
 
-            <div className="row sub">
-              <p>Sub-Total:</p>
-              <p>₹{subTotal}</p>
+            <div className="summary-row sub-total">
+              <p>Sub Total:</p> <p>₹{subTotal}</p>
             </div>
 
             <hr />
 
-            <div className="final-row">
+            <div className="final-total">
               <h3>Total Price</h3>
               <h3>₹{subTotal}/-</h3>
             </div>
 
-            <p className="note">(Inclusive of all taxes)</p>
+            <p className="tax-note">(Inclusive of all taxes)</p>
           </div>
 
-          <div className="checkout-bar">
-            <button className="checkout-btn" onClick={goToCheckout}>
-              Place Order Now
-            </button>
-
-            <div className="manual-order" onClick={sendManualOrder}>
-              <p>Order Manually</p>
-            </div>
-          </div>
+          <button className="checkout-btn" onClick={goToCheckout}>
+            Place Order Now
+          </button>
         </>
       )}
     </div>

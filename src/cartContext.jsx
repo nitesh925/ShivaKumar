@@ -5,21 +5,23 @@ import { doc, setDoc, getDoc } from "firebase/firestore";
 import { useAuth } from "./authContext";
 import { toast } from "react-toastify";
 
-const CartContext = createContext(null);
+const CartContext = createContext();
 
-export const CartProvider = ({ children }) => {
-  const { currentUser } = useAuth() || {};   // SAFE fallback
+export function CartProvider({ children }) {
+  const { currentUser } = useAuth() || {};
   const [cart, setCart] = useState([]);
 
+  // Load user cart
   useEffect(() => {
     const loadCart = async () => {
       if (!currentUser) {
-        setCart([]); 
+        setCart([]);
         return;
       }
 
       const ref = doc(db, "users", currentUser.uid);
       const snap = await getDoc(ref);
+
       if (snap.exists()) {
         setCart(snap.data().cart || []);
       }
@@ -28,54 +30,58 @@ export const CartProvider = ({ children }) => {
     loadCart();
   }, [currentUser]);
 
+  // Save to DB
   const saveToDB = async (updatedCart) => {
     if (!currentUser) return;
-    const ref = doc(db, "users", currentUser.uid);
-    await setDoc(ref, { cart: updatedCart }, { merge: true });
+    await setDoc(doc(db, "users", currentUser.uid), { cart: updatedCart }, { merge: true });
   };
 
+  // Add to cart
   const addToCart = (item) => {
     setCart((prev) => {
       const exists = prev.find((i) => i.id === item.id);
+
       const updatedCart = exists
-        ? prev.map((i) =>
-            i.id === item.id ? { ...i, qty: i.qty + 1 } : i
-          )
+        ? prev.map((i) => (i.id === item.id ? { ...i, qty: i.qty + 1 } : i))
         : [...prev, { ...item, qty: 1 }];
 
       saveToDB(updatedCart);
       toast.success("Added to cart!");
+
       return updatedCart;
     });
   };
 
+  // Remove item
   const removeFromCart = (id) => {
     setCart((prev) => {
-      const updatedCart = prev.filter((i) => i.id !== id);
-      saveToDB(updatedCart);
+      const updated = prev.filter((i) => i.id !== id);
+      saveToDB(updated);
       toast.info("Item removed!");
-      return updatedCart;
+      return updated;
     });
   };
 
+  // Increase qty
   const increaseQty = (id) => {
     setCart((prev) => {
       const updated = prev.map((i) =>
         i.id === id ? { ...i, qty: i.qty + 1 } : i
       );
       saveToDB(updated);
+      toast.success("Quantity increased!");
       return updated;
     });
   };
 
+  // Decrease qty
   const decreaseQty = (id) => {
     setCart((prev) => {
       const updated = prev.map((i) =>
-        i.id === id && i.qty > 1
-          ? { ...i, qty: i.qty - 1 }
-          : i
+        i.id === id && i.qty > 1 ? { ...i, qty: i.qty - 1 } : i
       );
       saveToDB(updated);
+      toast.warning("Quantity decreased!");
       return updated;
     });
   };
@@ -87,6 +93,11 @@ export const CartProvider = ({ children }) => {
       {children}
     </CartContext.Provider>
   );
-};
+}
 
-export const useCart = () => useContext(CartContext);
+// ------------------------------------
+// HOOK PLACED AT VERY END (Vite fix)
+// ------------------------------------
+export function useCart() {
+  return useContext(CartContext);
+}

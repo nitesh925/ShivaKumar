@@ -5,6 +5,7 @@ import { AuthProvider } from "./authContext";
 import { CartProvider } from "./cartContext";
 
 import "./styles/App.css";
+import "./styles/ToastFix.css";
 
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
@@ -40,104 +41,105 @@ import AdminRoute from "./components/AdminRoute";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-// ----------------------
-// HIDE NAVBAR ON THESE PAGES
-// ----------------------
 const hideNavbarRoutes = ["/login", "/register"];
 
 const App = () => {
   return (
-    <AuthProvider>
-      <CartProvider>
-        <ScrollToTop />
+    <>
+      <AuthProvider>
+        <CartProvider>
+          <ScrollToTop />
 
-        {/* Hide navbar only on login & register */}
-        {!hideNavbarRoutes.includes(window.location.pathname) && <Navbar />}
+          {/* Show navbar only if not hidden */}
+          {!hideNavbarRoutes.includes(window.location.pathname) && <Navbar />}
 
-        <Routes>
+          <Routes>
 
-          {/* -------------------- LOGIN / REGISTER -------------------- */}
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
+            {/* LOGIN / REGISTER */}
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
 
-          {/* -------------------- PUBLIC ROUTES -------------------- */}
-          <Route path="/" element={<Home />} />
-          <Route path="/home" element={<Home />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/profile" element={<Profile />} />
-          <Route path="/matches" element={<Matches />} />
-          <Route path="/contact" element={<Contact />} />
-          <Route path="/booking" element={<PhonePage />} />
-          <Route path="/services/:id" element={<ServiceDetail />} />
-          <Route path="/cart" element={<Cart />} />
-          <Route path="/privacy" element={<Privacy />} />
-          <Route path="/terms" element={<Terms />} />
-          <Route path="/checkout" element={<Checkout />} />
-          <Route path="/my-orders" element={<MyOrders />} />
-          <Route path="/category/:categoryName" element={<CategoryProducts />} />
+            {/* PUBLIC ROUTES */}
+            <Route path="/" element={<Home />} />
+            <Route path="/home" element={<Home />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/profile" element={<Profile />} />
+            <Route path="/matches" element={<Matches />} />
+            <Route path="/contact" element={<Contact />} />
+            <Route path="/booking" element={<PhonePage />} />
+            <Route path="/services/:id" element={<ServiceDetail />} />
+            <Route path="/cart" element={<Cart />} />
+            <Route path="/privacy" element={<Privacy />} />
+            <Route path="/terms" element={<Terms />} />
+            <Route path="/checkout" element={<Checkout />} />
+            <Route path="/my-orders" element={<MyOrders />} />
 
-          <Route path="/categories" element={<CategoriesPage />} />
-          <Route path="/allproducts" element={<AllProductsPage />} />
-          <Route path="/category/almonds" element={<AlmondsPage />} />
+            <Route path="/category/:categoryName" element={<CategoryProducts />} />
+            <Route path="/categories" element={<CategoriesPage />} />
+            <Route path="/allproducts" element={<AllProductsPage />} />
+            <Route path="/category/almonds" element={<AlmondsPage />} />
 
-          {/* -------------------- ADMIN ROUTES -------------------- */}
-          <Route
-            path="/admin"
-            element={
-              <AdminRoute>
-                <AdminDashboard />
-              </AdminRoute>
-            }
-          />
+            {/* ADMIN ROUTES */}
+            <Route
+              path="/admin"
+              element={
+                <AdminRoute>
+                  <AdminDashboard />
+                </AdminRoute>
+              }
+            />
 
-          <Route
-            path="/add-product"
-            element={
-              <AdminRoute>
-                <AddProductPage />
-              </AdminRoute>
-            }
-          />
+            <Route
+              path="/add-product"
+              element={
+                <AdminRoute>
+                  <AddProductPage />
+                </AdminRoute>
+              }
+            />
 
-          <Route
-            path="/add-category"
-            element={
-              <AdminRoute>
-                <AddCategoryPage />
-              </AdminRoute>
-            }
-          />
+            <Route
+              path="/add-category"
+              element={
+                <AdminRoute>
+                  <AddCategoryPage />
+                </AdminRoute>
+              }
+            />
 
-          <Route
-            path="/manage-products"
-            element={
-              <AdminRoute>
-                <ManageProducts />
-              </AdminRoute>
-            }
-          />
+            <Route
+              path="/manage-products"
+              element={
+                <AdminRoute>
+                  <ManageProducts />
+                </AdminRoute>
+              }
+            />
 
-          <Route
-            path="/manage-categories"
-            element={
-              <AdminRoute>
-                <ManageCategories />
-              </AdminRoute>
-            }
-          />
+            <Route
+              path="/manage-categories"
+              element={
+                <AdminRoute>
+                  <ManageCategories />
+                </AdminRoute>
+              }
+            />
 
-          {/* -------------------- NO MATCH -------------------- */}
-          <Route path="*" element={<Navigate to="/" />} />
+            {/* FALLBACK */}
+            <Route path="*" element={<Navigate to="/" />} />
 
-        </Routes>
+          </Routes>
 
-        {/* Hide footer when no navbar */}
-        {!hideNavbarRoutes.includes(window.location.pathname) && <Footer />}
-        {!hideNavbarRoutes.includes(window.location.pathname) && <BottomNav />}
+          {/* FOOTER & BOTTOM NAV */}
+          {!hideNavbarRoutes.includes(window.location.pathname) && <Footer />}
+          {!hideNavbarRoutes.includes(window.location.pathname) && <BottomNav />}
+        </CartProvider>
+      </AuthProvider>
 
-        <ToastContainer position="top-center" autoClose={2000} />
-      </CartProvider>
-    </AuthProvider>
+      {/* FIX → ToastContainer must be OUTSIDE providers */}
+      <ToastContainer position="top-right" autoClose={2000} />
+
+    </>
   );
 };
 
