@@ -1,50 +1,85 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import almondsData from "../data/almonds.json";
+import { db } from "../firebase/firebaseConfig";
+import { collection, getDocs } from "firebase/firestore";
 import "../styles/ServiceDetail.css";
 import { useCart } from "../cartContext";
 
 const ServiceDetail = () => {
-  const { id } = useParams();
-
-  // Get addToCart function
+  const { id } = useParams(); // Almonds, Cashews, Dates...
   const { addToCart } = useCart();
 
-  let data = [];
+  const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-  // match URL with JSON
-  if (id === "Almonds") data = almondsData;
+  const fetchProducts = async () => {
+  try {
+    const snapshot = await getDocs(collection(db, "products"));
+    const allProducts = snapshot.docs.map((doc) => ({
+      id: doc.id,
+      ...doc.data(),
+    }));
+
+    const filtered = allProducts.filter((p) =>
+      p.title.toLowerCase().includes(id.toLowerCase()) ||
+      p.category?.toLowerCase().includes(id.toLowerCase())
+    );
+
+    setProducts(filtered);
+    setLoading(false);
+  } catch (error) {
+    console.error("Error fetching products:", error);
+  }
+};
+
+
+  useEffect(() => {
+    fetchProducts();
+  }, [id]);
+
+  if (loading) return <p className="loading">Loading...</p>;
 
   return (
     <div className="service-page">
       <h1 className="service-title">{id}</h1>
 
-      <div className="service-card-container">
-        {data.map((item) => (
-          <div className="service-card" key={item.id}>
-            <img
-              src={`/images/${item.image}`}
-              alt={item.title}
-              className="service-img"
-            />
+      {products.length === 0 ? (
+        <p className="no-products">No products found for {id}</p>
+      ) : (
+        <div className="service-card-container">
+          {products.map((item) => (
+            <div className="service-card" key={item.id}>
+              <img
+                src={item.image}
+                alt={item.title}
+                className="service-img"
+              />
 
-            <div className="badge">{item.tag}</div>
-            <div className="discount">{item.discount}</div>
+              {item.tag && <div className="badge">{item.tag}</div>}
+              {item.discount && <div className="discount">{item.discount}% off</div>}
 
-            <h3 className="brand">NUTRAJ</h3>
-            <h2 className="title">{item.title}</h2>
+              <h3 className="brand">{item.brand || "NUTRAJ"}</h3>
+              <h2 className="title">{item.title}</h2>
 
-            <p className="mrp">
-              MRP: <span className="cut">₹{item.mrp}</span> ₹{item.price}
-              <span className="per"> (₹{item.price}/{item.weight})</span>
-            </p>
+              <p className="mrp">
+                {item.mrp && (
+                  <>
+                    MRP: <span className="cut">₹{item.mrp}</span>{" "}
+                  </>
+                )}
+                ₹{item.price}
+                {item.weight && (
+                  <span className="per"> (₹{item.price}/{item.weight})</span>
+                )}
+              </p>
 
-            <button className="cart-btn" onClick={() => addToCart(item)}>
-              Add To Cart
-            </button>
-          </div>
-        ))}
-      </div>
+              <button className="cart-btn" onClick={() => addToCart(item)}>
+                Add To Cart
+              </button>
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 };

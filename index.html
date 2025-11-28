@@ -1,23 +1,28 @@
 <!doctype html>
 <html lang="en">
   <head>
-    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
-<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
-<meta http-equiv="Pragma" content="no-cache" />
-<meta http-equiv="Expires" content="0" />
-<link rel="stylesheet" href="/src/index.css?v=${Date.now()}">
-<script type="module" src="/src/main.jsx?v=${Date.now()}"></script>
-
     <meta charset="UTF-8" />
+
+    <!-- Razorpay -->
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
+    <!-- Prevent caching -->
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
+
+    <!-- Cache-busting for CSS -->
+    <link rel="stylesheet" href="/src/index.css?v=1">
+
+    <!-- Cache-busting for JS -->
+    <script type="module" src="/src/main.jsx?v=1"></script>
+
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vite + React</title>
+    <title>Your App</title>
   </head>
+
   <body>
     <div id="root"></div>
-
-    <!-- REMOVE ?v=1.0.1 -->
-    <script type="module" src="/src/main.jsx"></script>
-
   </body>
 </html>
