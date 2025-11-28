@@ -2,6 +2,11 @@
 <html lang="en">
   <head>
     <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+<meta http-equiv="Pragma" content="no-cache" />
+<meta http-equiv="Expires" content="0" />
+<link rel="stylesheet" href="/src/index.css?v=${Date.now()}">
+<script type="module" src="/src/main.jsx?v=${Date.now()}"></script>
 
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
@@ -10,9 +15,9 @@
   </head>
   <body>
     <div id="root"></div>
-    <script type="module" src="/src/main.jsx">
-      
-    </script>
-    
+
+    <!-- REMOVE ?v=1.0.1 -->
+    <script type="module" src="/src/main.jsx"></script>
+
   </body>
 </html>
