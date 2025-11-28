@@ -28,12 +28,13 @@ import Terms from "./pages/Terms";
 import Privacy from "./pages/Privacy";
 import ScrollToTop from "./components/ScrollToTop";
 import CategoryProducts from "./pages/CategoryProducts";
+import MyOrders from "./pages/myOrders";
 
 import AdminDashboard from "./pages/AdminDashboard";
 import AddCategoryPage from "./pages/AddCategory";
 import ManageProducts from "./pages/ManageProducts";
 import ManageCategories from "./pages/ManageCategories";
-
+import Checkout from "./pages/Checkout";
 import AdminRoute from "./components/AdminRoute";
 
 import { ToastContainer } from "react-toastify";
@@ -71,7 +72,8 @@ const App = () => {
           <Route path="/cart" element={<Cart />} />
           <Route path="/privacy" element={<Privacy />} />
           <Route path="/terms" element={<Terms />} />
-
+          <Route path="/checkout" element={<Checkout />} />
+          <Route path="/my-orders" element={<MyOrders />} />
           <Route path="/category/:categoryName" element={<CategoryProducts />} />
 
           <Route path="/categories" element={<CategoriesPage />} />

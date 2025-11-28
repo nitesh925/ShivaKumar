@@ -69,13 +69,14 @@ const Navbar = () => {
         </div>
       </nav>
 
-      {/* SIDEBAR – LEFT OPENING */}
+      {/* SIDEBAR */}
       <div className={`sidebar ${isSidebarOpen ? "open" : ""}`}>
         <div className="sidebar-header">
           {currentUser ? `Hi, ${currentUser.displayName || "User"}` : "Shop"}
           <CloseIcon className="close-icon" onClick={() => setIsSidebarOpen(false)} />
         </div>
 
+        {/* AUTH BUTTONS */}
         {!currentUser && (
           <div className="auth-buttons">
             <Link to="/login" className="login-btn" onClick={() => setIsSidebarOpen(false)}>
@@ -87,8 +88,16 @@ const Navbar = () => {
           </div>
         )}
 
-        {/* CART BUTTON */}
-        
+        {/* MY ORDERS LINK */}
+        {currentUser && (
+          <ul className="sidebar-links">
+            <li>
+              <Link to="/my-orders" onClick={() => setIsSidebarOpen(false)}>
+                📦 My Orders
+              </Link>
+            </li>
+          </ul>
+        )}
 
         {/* CATEGORY LIST */}
         <ul className="sidebar-links">
@@ -115,6 +124,7 @@ const Navbar = () => {
           ))}
         </ul>
 
+        {/* LOGOUT */}
         {currentUser && (
           <Link to="/" className="logout-btn" onClick={handleLogout}>
             Logout

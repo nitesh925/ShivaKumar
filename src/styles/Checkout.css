@@ -1,0 +1,51 @@
+.checkout-page {
+  padding: 20px;
+}
+
+.phone-box, .otp-box, .address-box {
+  background: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  margin-top: 15px;
+  box-shadow: 0 0 5px rgba(0,0,0,0.1);
+}
+
+.phone-box input,
+.otp-box input,
+.address-box input {
+  width: 100%;
+  padding: 12px;
+  margin: 10px 0;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+}
+
+button {
+  width: 100%;
+  padding: 12px;
+  border: none;
+  background: #ad5617;
+  color: #fff;
+  border-radius: 8px;
+  font-size: 16px;
+  margin-top: 10px;
+}
+
+.order-box {
+  background: #fafafa;
+  padding: 15px;
+  border-radius: 10px;
+}
+
+.summary-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.summary-item img {
+  width: 60px;
+  height: 60px;
+  border-radius: 10px;
+  margin-right: 10px;
+}

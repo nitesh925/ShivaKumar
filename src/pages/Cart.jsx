@@ -1,4 +1,4 @@
-import React, { useMemo, useEffect } from "react";
+import React, { useMemo } from "react";
 import { useCart } from "../cartContext";
 import "../styles/Cart.css";
 import { toast } from "react-toastify";
@@ -10,48 +10,22 @@ export default function Cart() {
   const { currentUser } = useAuth();
   const navigate = useNavigate();
 
-  // ---------------- Load Razorpay Script ----------------
-  useEffect(() => {
-    const script = document.createElement("script");
-    script.src = "https://checkout.razorpay.com/v1/checkout.js";
-    script.async = true;
-    document.body.appendChild(script);
-  }, []);
-
-  // ---------------- SAFE IMAGE HANDLER ----------------
   const getImage = (img) => {
-    // If missing → use placeholder
-    if (!img || typeof img !== "string") {
-      return "/images/placeholder.png";
-    }
-
-    // Already a full image URL
-    if (img.startsWith("http://") || img.startsWith("https://")) {
-      return img;
-    }
-
-    // Local image path
-    if (img.startsWith("/")) {
-      return img;
-    }
-
-    // Default local folder
+    if (!img || typeof img !== "string") return "/images/placeholder.png";
+    if (img.startsWith("http://") || img.startsWith("https://")) return img;
+    if (img.startsWith("/")) return img;
     return `/images/${img}`;
   };
 
-  // ---------------- CALCULATIONS ----------------
   const { mrpTotal, discountTotal, subTotal } = useMemo(() => {
     let mrp = 0;
     let discount = 0;
-
     cart.forEach((item) => {
       const itemMRP = item.mrp * item.qty;
       const itemPrice = item.price * item.qty;
-
       mrp += itemMRP;
       discount += itemMRP - itemPrice;
     });
-
     return {
       mrpTotal: mrp,
       discountTotal: discount,
@@ -59,50 +33,15 @@ export default function Cart() {
     };
   }, [cart]);
 
-  const totalAmount = subTotal;
-
-  // ---------------- RAZORPAY PAYMENT ----------------
-  const handlePayment = () => {
+  const goToCheckout = () => {
     if (!currentUser) {
       toast.error("Please login before placing an order!");
       navigate("/login");
       return;
     }
-
-    if (typeof window.Razorpay === "undefined") {
-      toast.error("Payment SDK failed to load. Try again.");
-      return;
-    }
-
-    const options = {
-      key: "rzp_live_RlDFtwbtIBcTEE",
-      amount: totalAmount * 100,
-      currency: "INR",
-      name: "Siva Kumar General Stores",
-      description: "Order Payment",
-      image: "/images/SKnew.png",
-
-      handler: function (response) {
-        toast.success("Payment Successful!");
-        navigate("/order-success");
-      },
-
-      prefill: {
-        name: currentUser?.displayName || "Customer",
-        email: currentUser?.email || "customer@example.com",
-        contact: "9999999999",
-      },
-
-      theme: {
-        color: "#ad5617",
-      },
-    };
-
-    const rzp = new window.Razorpay(options);
-    rzp.open();
+    navigate("/checkout");
   };
 
-  // ---------------- MANUAL ORDER WHATSAPP ----------------
   const sendManualOrder = () => {
     const orderText = cart
       .map(
@@ -128,26 +67,21 @@ export default function Cart() {
 
   return (
     <div className="cart-drawer">
-      {/* EMPTY CART */}
       {cart.length === 0 ? (
         <div className="empty-cart-wrapper">
           <img
             src="/images/emptycart.png"
             alt="Empty Cart"
             className="empty-cart-image"
-            onError={(e) => (e.target.src = "/images/placeholder.png")}
           />
-
           <h2 className="empty-title">I'm Empty!</h2>
           <p className="empty-subtext">Your cart is feeling lonely.</p>
-
           <button className="go-shopping-btn" onClick={() => navigate("/")}>
             Go Shopping!
           </button>
         </div>
       ) : (
         <>
-          {/* CART ITEMS */}
           <div className="cart-items">
             <h2 className="cart-title">Keep Nourishing Your Cart 🛒</h2>
 
@@ -156,12 +90,12 @@ export default function Cart() {
                 <img
                   src={getImage(item.image)}
                   className="cart-img"
-                  onError={(e) => (e.target.src = "/images/placeholder.png")}
                 />
 
                 <div className="cart-info">
-                  <h4>{item.brand} {item.title}</h4>
-
+                  <h4>
+                    {item.brand} {item.title}
+                  </h4>
                   <div className="price-row">
                     <span className="cut">₹{item.mrp}</span>
                     <span className="price">₹{item.price}</span>
@@ -184,7 +118,6 @@ export default function Cart() {
             ))}
           </div>
 
-          {/* ORDER SUMMARY */}
           <div className="order-summary-box">
             <h2>Order Summary</h2>
 
@@ -196,11 +129,6 @@ export default function Cart() {
             <div className="row">
               <p>Offer Discount</p>
               <p>- ₹{discountTotal}</p>
-            </div>
-
-            <div className="row">
-              <p>Reward Points</p>
-              <p>- ₹0</p>
             </div>
 
             <div className="row sub">
@@ -218,9 +146,8 @@ export default function Cart() {
             <p className="note">(Inclusive of all taxes)</p>
           </div>
 
-          {/* CHECKOUT BUTTONS */}
           <div className="checkout-bar">
-            <button className="checkout-btn" onClick={handlePayment}>
+            <button className="checkout-btn" onClick={goToCheckout}>
               Place Order Now
             </button>
 
