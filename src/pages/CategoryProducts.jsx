@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import { db } from "../firebase/firebaseConfig";
 import { collection, getDocs } from "firebase/firestore";
 import { useCart } from "../cartContext";
 import "../styles/CategoryProducts.css";
+import ProductLoader from "../components/ProductLoader";
 
 const isValid = (value) => {
   if (!value) return false;
@@ -29,84 +30,97 @@ const CategoryProducts = () => {
   const { addToCart } = useCart();
 
   useEffect(() => {
-    const fetchProducts = async () => {
+    const load = async () => {
       try {
         const snapshot = await getDocs(collection(db, "products"));
-        const allProducts = snapshot.docs.map((doc) => ({
+        const list = snapshot.docs.map((doc) => ({
           id: doc.id,
           ...doc.data(),
         }));
 
-        // 🔥 FIX HERE → convert both sides to lowercase
-        const filtered = allProducts.filter(
+        const filtered = list.filter(
           (item) =>
             item.category &&
             item.category.toLowerCase() === categoryName.toLowerCase()
         );
 
         setProducts(filtered);
-      } catch (err) {
-        console.error("Error fetching products:", err);
+      } catch (error) {
+        console.error("Error fetching products", error);
       } finally {
         setLoading(false);
       }
     };
 
-    fetchProducts();
+    load();
   }, [categoryName]);
 
-  if (loading) return <p className="loading">Loading products...</p>;
+
+
+if (loading) {
+  return (
+    <div className="product-grid">
+      {[1,2,3,4,5,6].map((i) => (
+        <ProductLoader key={i} />
+      ))}
+    </div>
+  );
+}
+
+
 
   return (
     <div className="category-products-container">
       <h2 className="category-products-title">{categoryName}</h2>
 
       {products.length === 0 ? (
-        <p className="no-products">No products found in this category.</p>
+        <p className="no-products">No products found.</p>
       ) : (
         <div className="products-grid">
           {products.map((product) => {
-            const calculatedOffer = getOffer(product);
+            const offer = getOffer(product);
 
             return (
               <div key={product.id} className="product-card">
-                {isValid(product.tag) && (
-                  <span className="tag-left">{product.tag}</span>
-                )}
 
-                {calculatedOffer && (
-                  <span className="tag-right">{calculatedOffer}% off</span>
-                )}
+                <Link to={`/product/${product.id}`} className="click-area">
 
-                {isValid(product.image) ? (
-                  <img
-                    src={product.image}
-                    alt={product.title}
-                    className="product-img"
-                  />
-                ) : (
-                  <div className="image-placeholder"></div>
-                )}
-
-                <div className="brand-rating">
-                  <span className="brand">{product.brand}</span>
-                  {isValid(product.rating) && (
-                    <span className="rating">⭐ {product.rating}</span>
+                  {isValid(product.tag) && (
+                    <span className="tag-left">{product.tag}</span>
                   )}
-                </div>
 
-                <p className="product-title">{product.title}</p>
+                  {offer && <span className="tag-right">{offer}% Off</span>}
 
-                <p className="product-price">
-                  {isValid(product.mrp) && (
-                    <span className="mrp">₹{product.mrp}</span>
+                  {isValid(product.image) ? (
+                    <img
+                      src={product.image}
+                      alt={product.title}
+                      className="product-img"
+                    />
+                  ) : (
+                    <div className="image-placeholder"></div>
                   )}
-                  <span className="final-price">₹{product.price}</span>
-                </p>
 
-                {isValid(product.weight) && (
-                  <p className="weight">({product.weight})</p>
-                )}
+                  <div className="brand-rating">
+                    <span className="brand">{product.brand}</span>
+                    {isValid(product.rating) && (
+                      <span className="rating">⭐ {product.rating}</span>
+                    )}
+                  </div>
+
+                  <p className="product-title">{product.title}</p>
+
+                  <p className="product-price">
+                    {isValid(product.mrp) && (
+                      <span className="mrp">₹{product.mrp}</span>
+                    )}
+                    <span className="final-price">₹{product.price}</span>
+                  </p>
+
+                  {isValid(product.weight) && (
+                    <p className="weight">({product.weight})</p>
+                  )}
+                </Link>
 
                 <button
                   className="add-cart-btn"
@@ -114,6 +128,7 @@ const CategoryProducts = () => {
                 >
                   Add To Cart
                 </button>
+
               </div>
             );
           })}

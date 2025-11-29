@@ -4,6 +4,7 @@ import { db } from "../firebase/firebaseConfig";
 import { collection, getDocs } from "firebase/firestore";
 import "../styles/ServiceDetail.css";
 import { useCart } from "../cartContext";
+import ProductLoader from "../components/ProductLoader";
 
 const ServiceDetail = () => {
   const { id } = useParams(); // Almonds, Cashews, Dates...
@@ -37,7 +38,16 @@ const ServiceDetail = () => {
     fetchProducts();
   }, [id]);
 
-  if (loading) return <p className="loading">Loading...</p>;
+if (loading) {
+  return (
+    <div className="product-grid">
+      {[1,2,3,4,5,6].map((i) => (
+        <ProductLoader key={i} />
+      ))}
+    </div>
+  );
+}
+
 
   return (
     <div className="service-page">

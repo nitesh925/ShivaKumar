@@ -24,7 +24,7 @@
   padding: 14px;
   background: #f8f8f8;
   border-radius: 12px;
-  position: relative;   /* IMPORTANT FOR X BUTTON */
+  position: relative;
   align-items: center;
 }
 
@@ -64,7 +64,11 @@
 .price {
   font-size: 15px;
   font-weight: 700;
+  margin-left: 10px;
 }
+
+.manual-order { text-align: center; margin-top: 10px; cursor: pointer; } 
+.manual-order p { font-size: 15px; color: #444; text-decoration: underline; }
 
 /* Qty */
 .qty-box {
@@ -92,13 +96,27 @@
 /* Remove Button */
 .remove-btnn {
   color: black;
-  position: absolute;   /* FIXED POSITION */
+  position: absolute;
   top: 10px;
   right: 10px;
   font-size: 20px;
   border: none;
   background: none;
   cursor: pointer;
+}
+
+.remove-text-btn {
+  width: 60px;
+  padding: 6px 0px;
+  background: #ffeded;
+  border: 1px solid #d9534f;
+  color: #b90000;
+  border-radius: 8px;
+  font-size: 12px;
+  cursor: pointer;
+}
+.remove-text-btn:hover {
+  background: #ffd9d9;
 }
 
 /* Order Summary Box */
@@ -129,6 +147,7 @@
   display: flex;
   justify-content: space-between;
   margin-top: 10px;
+  font-size: 16px;
 }
 
 .tax-note {
@@ -180,18 +199,38 @@
   border-radius: 10px;
   border: none;
 }
-
-.remove-text-btn {
-  width: 60px;
-  padding: 6px 0px;
-  background: #ffeded;
-  border: 1px solid #d9534f;
-  color: #b90000;
-  border-radius: 8px;
-  font-size: 12px;
-  cursor: pointer;
+/* Order Summary Alignment Fix */
+.summary-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0px;
 }
 
-.remove-text-btn:hover {
-  background: #ffd9d9;
+.summary-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+/* Long names break but right prices stay aligned */
+.summary-name {
+  flex: 1;
+  font-size: 15px;
+  font-weight: 500;
+  padding-right: 10px;
+  word-break: break-word;
+}
+
+.summary-price {
+  min-width: 140px;            /* Forces alignment */
+  text-align: right;
+  font-weight: 600;
+  font-size: 15px;
+}
+
+.summary-line {
+  margin: 12px 0;
+  border: none;
+  border-top: 1px solid #ddd;
 }

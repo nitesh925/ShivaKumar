@@ -40,12 +40,37 @@ button {
 .summary-item {
   display: flex;
   align-items: center;
-  margin-bottom: 12px;
+  justify-content: space-between;
+  margin-bottom: 18px;
+  padding-bottom: 10px;
 }
 
 .summary-item img {
-  width: 60px;
-  height: 60px;
+  width: 55px;
+  height: 55px;
   border-radius: 10px;
-  margin-right: 10px;
+  margin-right: 12px;
+  flex-shrink: 0;
+}
+
+.summary-details {
+  flex: 1; /* pushes price to right */
+  margin-left: 8px;
+}
+
+.summary-title {
+  font-size: 16px;
+  font-weight: 500;
+  color: #333;
+}
+
+.summary-price {
+  text-align: right;
+  min-width: 80px;
+}
+
+.summary-price p {
+  font-size: 16px;
+  font-weight: 600;
+  color: #000;
 }

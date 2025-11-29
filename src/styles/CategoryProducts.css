@@ -136,3 +136,13 @@
   font-size: 15px;
   font-weight: 600;
 }
+.product-title {
+  color: #2d2d2d !important;
+  text-decoration: none !important;
+  font-weight: 600;
+}
+
+.product-card a {
+  color: inherit !important;
+  text-decoration: none !important;
+}

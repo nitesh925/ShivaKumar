@@ -107,16 +107,19 @@ export default function Checkout() {
         <h3>Order Summary | {cart.length} items</h3>
 
         {cart.map((item) => (
-          <div className="summary-item" key={item.id}>
-            <img src={item.image} alt="" />
-            <div>
-              <p>{item.title}</p>
-              <p>
-                ₹{item.price} × {item.qty}
-              </p>
-            </div>
-          </div>
-        ))}
+  <div className="summary-item" key={item.id}>
+    <img src={item.image} alt="" />
+
+    <div className="summary-details">
+      <p className="summary-title">{item.title}</p>
+    </div>
+
+    <div className="summary-price">
+      <p>₹{item.price} × {item.qty}</p>
+    </div>
+  </div>
+))}
+
 
         <h2>Total: ₹{totalAmount}</h2>
       </div>

@@ -1,0 +1,145 @@
+.product-page {
+  padding: 15px;
+  max-width: 600px;
+  margin: auto;
+  background: #fff;
+}
+
+/* MAIN PRODUCT IMAGE */
+.product-main-img {
+  width: 100%;
+  border-radius: 10px;
+}
+
+/* TITLE */
+.title {
+  font-size: 20px;
+  font-weight: 600;
+  margin-top: 15px;
+}
+
+/* PRICE SECTION */
+.price-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 10px;
+  width: 100%;
+}
+
+.price-left {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.mrp-line {
+  font-size: 13px;
+  color: #333;
+}
+
+.mrp-cut {
+  text-decoration: line-through;
+  color: #9a9a9a;
+}
+
+.save-amount {
+  color: #b36d5b;
+}
+
+.final-price-big {
+  font-size: 24px;
+  font-weight: 700;
+  color: #883a02;
+}
+
+.incl-text {
+  font-size: 14px;
+  color: #555;
+}
+
+.per-unit {
+  font-size: 14px;
+  color: #000;
+}
+
+/* QUANTITY SECTION */
+.qty-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 20px;
+}
+
+/* FIXED — Smaller, centered quantity box */
+.qty-controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  border: 1px solid #883a02;
+  padding: 8px 14px;
+  border-radius: 8px;
+  width: 120px; /* Made smaller */
+}
+
+.qty-controls button {
+  border: none;
+  background: none;
+  font-size: 20px;
+  color: #883a02;
+  cursor: pointer;
+}
+
+.qty-number {
+  font-size: 18px;
+  font-weight: 600;
+}
+
+/* BUTTONS */
+.add-btn {
+  width: 100%;
+  background: #883a02;
+  color: #fff;
+  padding: 14px;
+  font-size: 18px;
+  border-radius: 10px;
+  margin-top: 20px;
+  border: none;
+}
+
+.buy-btn {
+  width: 100%;
+  border: 2px solid #883a02;
+  background: #fff;
+  color: #883a02;
+  padding: 14px;
+  font-size: 18px;
+  border-radius: 10px;
+  margin-top: 12px;
+}
+
+/* PINCODE SECTION — FIXED ALIGNMENT */
+.pincode-box {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 25px;
+}
+
+.pincode-box input {
+  flex: 1;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 15px;
+}
+
+.pincode-box button {
+  padding: 12px 18px;
+  background: #883a02;
+  color: #fff;
+  border-radius: 8px;
+  border: none;
+  font-size: 16px;
+}

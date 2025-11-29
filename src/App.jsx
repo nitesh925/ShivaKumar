@@ -1,5 +1,5 @@
 import React from "react";
-import { Routes, Route, Navigate } from "react-router-dom";
+import { Routes, Route, Navigate, useLocation } from "react-router-dom";
 
 import { AuthProvider } from "./authContext";
 import { CartProvider } from "./cartContext";
@@ -27,9 +27,12 @@ import AllProductsPage from "./pages/AllProductsPage";
 import AddProductPage from "./pages/AddProductPage";
 import Terms from "./pages/Terms";
 import Privacy from "./pages/Privacy";
+
 import ScrollToTop from "./components/ScrollToTop";
+
 import CategoryProducts from "./pages/CategoryProducts";
 import MyOrders from "./pages/myOrders";
+import ProductPage from "./pages/ProductPage";
 
 import AdminDashboard from "./pages/AdminDashboard";
 import AddCategoryPage from "./pages/AddCategory";
@@ -43,104 +46,111 @@ import "react-toastify/dist/ReactToastify.css";
 
 const hideNavbarRoutes = ["/login", "/register"];
 
-const App = () => {
+const AppContent = () => {
+  const location = useLocation(); // FIX → Tracks route changes
+
   return (
     <>
-      <AuthProvider>
-        <CartProvider>
-          <ScrollToTop />
+      <ScrollToTop />
 
-          {/* Show navbar only if not hidden */}
-          {!hideNavbarRoutes.includes(window.location.pathname) && <Navbar />}
+      {/* NAVBAR TOP (only if route not hidden) */}
+      {!hideNavbarRoutes.includes(location.pathname) && <Navbar />}
 
-          <Routes>
+      <Routes>
+        {/* LOGIN / REGISTER */}
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
 
-            {/* LOGIN / REGISTER */}
-            <Route path="/login" element={<Login />} />
-            <Route path="/register" element={<Register />} />
+        {/* PUBLIC ROUTES */}
+        <Route path="/" element={<Home />} />
+        <Route path="/home" element={<Home />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/profile" element={<Profile />} />
+        <Route path="/matches" element={<Matches />} />
+        <Route path="/contact" element={<Contact />} />
+        <Route path="/booking" element={<PhonePage />} />
+        <Route path="/services/:id" element={<ServiceDetail />} />
+        <Route path="/cart" element={<Cart />} />
+        <Route path="/privacy" element={<Privacy />} />
+        <Route path="/terms" element={<Terms />} />
+        <Route path="/checkout" element={<Checkout />} />
+        <Route path="/my-orders" element={<MyOrders />} />
 
-            {/* PUBLIC ROUTES */}
-            <Route path="/" element={<Home />} />
-            <Route path="/home" element={<Home />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/profile" element={<Profile />} />
-            <Route path="/matches" element={<Matches />} />
-            <Route path="/contact" element={<Contact />} />
-            <Route path="/booking" element={<PhonePage />} />
-            <Route path="/services/:id" element={<ServiceDetail />} />
-            <Route path="/cart" element={<Cart />} />
-            <Route path="/privacy" element={<Privacy />} />
-            <Route path="/terms" element={<Terms />} />
-            <Route path="/checkout" element={<Checkout />} />
-            <Route path="/my-orders" element={<MyOrders />} />
+        <Route path="/category/:categoryName" element={<CategoryProducts />} />
+        <Route path="/categories" element={<CategoriesPage />} />
+        <Route path="/allproducts" element={<AllProductsPage />} />
+        <Route path="/category/almonds" element={<AlmondsPage />} />
 
-            <Route path="/category/:categoryName" element={<CategoryProducts />} />
-            <Route path="/categories" element={<CategoriesPage />} />
-            <Route path="/allproducts" element={<AllProductsPage />} />
-            <Route path="/category/almonds" element={<AlmondsPage />} />
+        <Route path="/product/:id" element={<ProductPage />} />
 
-            {/* ADMIN ROUTES */}
-            <Route
-              path="/admin"
-              element={
-                <AdminRoute>
-                  <AdminDashboard />
-                </AdminRoute>
-              }
-            />
+        {/* ADMIN ROUTES */}
+        <Route
+          path="/admin"
+          element={
+            <AdminRoute>
+              <AdminDashboard />
+            </AdminRoute>
+          }
+        />
 
-            <Route
-              path="/add-product"
-              element={
-                <AdminRoute>
-                  <AddProductPage />
-                </AdminRoute>
-              }
-            />
+        <Route
+          path="/add-product"
+          element={
+            <AdminRoute>
+              <AddProductPage />
+            </AdminRoute>
+          }
+        />
 
-            <Route
-              path="/add-category"
-              element={
-                <AdminRoute>
-                  <AddCategoryPage />
-                </AdminRoute>
-              }
-            />
+        <Route
+          path="/add-category"
+          element={
+            <AdminRoute>
+              <AddCategoryPage />
+            </AdminRoute>
+          }
+        />
 
-            <Route
-              path="/manage-products"
-              element={
-                <AdminRoute>
-                  <ManageProducts />
-                </AdminRoute>
-              }
-            />
+        <Route
+          path="/manage-products"
+          element={
+            <AdminRoute>
+              <ManageProducts />
+            </AdminRoute>
+          }
+        />
 
-            <Route
-              path="/manage-categories"
-              element={
-                <AdminRoute>
-                  <ManageCategories />
-                </AdminRoute>
-              }
-            />
+        <Route
+          path="/manage-categories"
+          element={
+            <AdminRoute>
+              <ManageCategories />
+            </AdminRoute>
+          }
+        />
 
-            {/* FALLBACK */}
-            <Route path="*" element={<Navigate to="/" />} />
+        {/* FALLBACK */}
+        <Route path="*" element={<Navigate to="/" />} />
+      </Routes>
 
-          </Routes>
-
-          {/* FOOTER & BOTTOM NAV */}
-          {!hideNavbarRoutes.includes(window.location.pathname) && <Footer />}
-          {!hideNavbarRoutes.includes(window.location.pathname) && <BottomNav />}
-        </CartProvider>
-      </AuthProvider>
-
-      {/* FIX → ToastContainer must be OUTSIDE providers */}
-      <ToastContainer position="top-right" autoClose={2000} />
-
+      {/* FOOTER & BOTTOM NAV */}
+      {!hideNavbarRoutes.includes(location.pathname) && <Footer />}
+      {!hideNavbarRoutes.includes(location.pathname) && <BottomNav />}
     </>
   );
 };
+
+const App = () => (
+  <>
+    <AuthProvider>
+      <CartProvider>
+        <AppContent />
+      </CartProvider>
+    </AuthProvider>
+
+    {/* Toast container must be outside providers */}
+    <ToastContainer position="top-right" autoClose={2000} />
+  </>
+);
 
 export default App;
