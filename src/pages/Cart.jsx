@@ -55,7 +55,7 @@ const sendManualOrder = () => {
 
       <div className="cart-items">
         {cart.map((item) => (
-          <div className="cart-item" key={item.uniqueId}>
+          <div className="cart-item" key={item.id}>
             <img src={item.image} className="cart-img" alt={item.name} />
 
             <div className="cart-info">
@@ -69,19 +69,19 @@ const sendManualOrder = () => {
             
               {/* QTY CONTROLS */}
               <div className="qty-box">
-                <button className="qty-btn" onClick={() => decreaseQty(item.uniqueId)}>
+                <button className="qty-btn" onClick={() => decreaseQty(item.id)}>
                   –
                 </button>
 
                 <span className="qty-count">{item.qty}</span>
 
-                <button className="qty-btn" onClick={() => increaseQty(item.uniqueId)}>
+                <button className="qty-btn" onClick={() => increaseQty(item.id)}>
                   +
                 </button>
               </div>
             </div>
 
-            <button className="remove-text-btn" onClick={() => removeFromCart(item.uniqueId)}>
+            <button className="remove-text-btn" onClick={() => removeFromCart(item.id)}>
               Remove
             </button>
           </div>
@@ -94,7 +94,7 @@ const sendManualOrder = () => {
 
   <div className="summary-list">
     {cart.map((item) => (
-      <div className="summary-item" key={item.uniqueId}>
+      <div className="summary-item" key={item.id}>
         <span className="summary-name">{item.brand} {item.title}</span>
 
         <span className="summary-price">

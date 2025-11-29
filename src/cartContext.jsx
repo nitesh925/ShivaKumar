@@ -1,87 +1,103 @@
 // src/cartContext.jsx
-import React, { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useContext, useState, useEffect } from "react";
+import { db } from "./firebase/firebaseConfig";
+import { doc, setDoc, getDoc } from "firebase/firestore";
+import { useAuth } from "./authContext";
+import { toast } from "react-toastify";
 
 const CartContext = createContext();
 
-export const CartProvider = ({ children }) => {
+export function CartProvider({ children }) {
+  const { currentUser } = useAuth() || {};
   const [cart, setCart] = useState([]);
-  const [buyNowItem, setBuyNowProduct] = useState(null);
 
-  // Load cart from localStorage
+  // Load user cart
   useEffect(() => {
-    const savedCart = localStorage.getItem("cart");
-    if (savedCart) {
-      setCart(JSON.parse(savedCart));
-    }
-  }, []);
+    const loadCart = async () => {
+      if (!currentUser) {
+        setCart([]);
+        return;
+      }
 
-  // Save cart to localStorage
-  useEffect(() => {
-    localStorage.setItem("cart", JSON.stringify(cart));
-  }, [cart]);
+      const ref = doc(db, "users", currentUser.uid);
+      const snap = await getDoc(ref);
+
+      if (snap.exists()) {
+        setCart(snap.data().cart || []);
+      }
+    };
+
+    loadCart();
+  }, [currentUser]);
+
+  // Save to DB
+  const saveToDB = async (updatedCart) => {
+    if (!currentUser) return;
+    await setDoc(doc(db, "users", currentUser.uid), { cart: updatedCart }, { merge: true });
+  };
 
   // Add to cart
-  const addToCart = (product) => {
+  const addToCart = (item) => {
     setCart((prev) => {
-      const exist = prev.find((item) => item.id === product.id);
-      if (exist) {
-        return prev.map((item) =>
-          item.id === product.id
-            ? { ...item, qty: item.qty + 1 }
-            : item
-        );
-      }
-      return [...prev, { ...product, qty: 1 }];
+      const exists = prev.find((i) => i.id === item.id);
+
+      const updatedCart = exists
+        ? prev.map((i) => (i.id === item.id ? { ...i, qty: i.qty + 1 } : i))
+        : [...prev, { ...item, qty: 1 }];
+
+      saveToDB(updatedCart);
+      toast.success("Added to cart!");
+
+      return updatedCart;
     });
   };
 
-  // Remove from cart
+  // Remove item
   const removeFromCart = (id) => {
-    setCart((prev) => prev.filter((item) => item.id !== id));
+    setCart((prev) => {
+      const updated = prev.filter((i) => i.id !== id);
+      saveToDB(updated);
+      toast.info("Item removed!");
+      return updated;
+    });
   };
 
   // Increase qty
   const increaseQty = (id) => {
-    setCart((prev) =>
-      prev.map((item) =>
-        item.id === id ? { ...item, qty: item.qty + 1 } : item
-      )
-    );
+    setCart((prev) => {
+      const updated = prev.map((i) =>
+        i.id === id ? { ...i, qty: i.qty + 1 } : i
+      );
+      saveToDB(updated);
+      toast.success("Quantity increased!");
+      return updated;
+    });
   };
 
   // Decrease qty
   const decreaseQty = (id) => {
-    setCart((prev) =>
-      prev.map((item) =>
-        item.id === id && item.qty > 1
-          ? { ...item, qty: item.qty - 1 }
-          : item
-      )
-    );
+    setCart((prev) => {
+      const updated = prev.map((i) =>
+        i.id === id && i.qty > 1 ? { ...i, qty: i.qty - 1 } : i
+      );
+      saveToDB(updated);
+      toast.warning("Quantity decreased!");
+      return updated;
+    });
   };
-
-  // -------- BUY NOW LOGIC (Important) --------
-  const triggerBuyNow = (product) => {
-    setBuyNowProduct(product); // store temporary product
-  };
-  // -------------------------------------------
 
   return (
     <CartContext.Provider
-      value={{
-        cart,
-        addToCart,
-        removeFromCart,
-        increaseQty,
-        decreaseQty,
-        buyNowItem,
-        triggerBuyNow,
-        
-      }}
+      value={{ cart, addToCart, removeFromCart, increaseQty, decreaseQty }}
     >
       {children}
     </CartContext.Provider>
   );
-};
+}
 
-export const useCart = () => useContext(CartContext);
+// ------------------------------------
+// HOOK PLACED AT VERY END (Vite fix)
+// ------------------------------------
+export function useCart() {
+  return useContext(CartContext);
+}
