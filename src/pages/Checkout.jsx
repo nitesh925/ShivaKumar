@@ -142,44 +142,67 @@ export default function Checkout() {
 
       {/* Step 2: Address */}
       {step === 2 && (
-        <div className="address-box">
-          <h3>Delivery Address</h3>
+  <div className="address-box">
+    <h3>Delivery Address</h3>
 
-          <input
-            placeholder="Full Name"
-            value={address.name}
-            onChange={(e) => setAddress({ ...address, name: e.target.value })}
-          />
+    <input
+      placeholder="Full Name"
+      value={address.name}
+      onChange={(e) => setAddress({ ...address, name: e.target.value })}
+    />
 
-          <input
-            placeholder="House / Flat No."
-            value={address.house}
-            onChange={(e) => setAddress({ ...address, house: e.target.value })}
-          />
+    <input
+      placeholder="House / Flat No."
+      value={address.house}
+      onChange={(e) => setAddress({ ...address, house: e.target.value })}
+    />
 
-          <input
-            placeholder="Area / Colony"
-            value={address.area}
-            onChange={(e) => setAddress({ ...address, area: e.target.value })}
-          />
+    <input
+      placeholder="Area / Colony"
+      value={address.area}
+      onChange={(e) => setAddress({ ...address, area: e.target.value })}
+    />
 
-          <input
-            placeholder="City"
-            value={address.city}
-            onChange={(e) => setAddress({ ...address, city: e.target.value })}
-          />
+    <input
+      placeholder="City"
+      value={address.city}
+      onChange={(e) => setAddress({ ...address, city: e.target.value })}
+    />
 
-          <input
-            placeholder="Pincode"
-            value={address.pincode}
-            onChange={(e) =>
-              setAddress({ ...address, pincode: e.target.value })
-            }
-          />
+    <input
+      placeholder="Pincode (6 digits)"
+      value={address.pincode}
+      onChange={(e) =>
+        setAddress({ ...address, pincode: e.target.value })
+      }
+    />
 
-          <button onClick={startPayment}>Proceed to Pay</button>
-        </div>
-      )}
+    <button
+      onClick={() => {
+        // Validation
+        if (
+          address.name.trim() === "" ||
+          address.house.trim() === "" ||
+          address.area.trim() === "" ||
+          address.city.trim() === "" ||
+          address.pincode.trim() === ""
+        ) {
+          alert("Please fill all fields");
+          return;
+        }
+
+        if (address.pincode.length !== 6) {
+          alert("Pincode must be 6 digits");
+          return;
+        }
+
+        startPayment();
+      }}
+    >
+      Proceed to Pay
+    </button>
+  </div>
+)}
 
       {/* Step 3: Success */}
       {step === 3 && (
