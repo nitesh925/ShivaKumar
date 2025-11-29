@@ -1,9 +1,29 @@
+/* Prevent horizontal scroll globally */
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden !important;
+}
+
 .product-page {
   padding: 15px;
-  max-width: 600px;
-  margin: auto;
+  width: 100%;
+  max-width: 100%;  /* IMPORTANT */
+  margin: 0 auto;
   background: #fff;
+  overflow-x: hidden;
 }
+.product-page {
+  position: relative;
+  left: 0;
+  right: 0;
+}
+
 
 /* MAIN PRODUCT IMAGE */
 .product-main-img {
@@ -80,7 +100,7 @@
   border: 1px solid #883a02;
   padding: 8px 14px;
   border-radius: 8px;
-  width: 120px; /* Made smaller */
+  width: 100px; /* Made smaller */
 }
 
 .qty-controls button {
@@ -118,6 +138,7 @@
   border-radius: 10px;
   margin-top: 12px;
 }
+
 
 /* PINCODE SECTION — FIXED ALIGNMENT */
 .pincode-box {
